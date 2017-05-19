@@ -2,27 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="hust.parksys.dao.ParkInfoDao" >
    
-  <select id="selectFreByTime" resultType="java.lang.Integer" parameterType="java.lang.String" >
-    SELECT count(*) as a from 
-    (SELECT car_num from park_info 
+   <select id="selectCountBycar" resultType="hust.parksys.entity.CommonMap" parameterType="java.lang.String" >
+    SELECT car_num value1,count(*) value2 from 
+    (SELECT * from park_info 
     WHERE time_in <![CDATA[ >= ]]> #{0} and time_in <![CDATA[ <= ]]> #{1}) as b 
-    GROUP BY car_num ORDER BY a;
+    GROUP BY value1;
   </select>
   <select id="selectCountByDay" resultType="hust.parksys.entity.CountByDays" parameterType="java.lang.String" >
     SELECT str_to_date(DATE_FORMAT(time_in,'%Y%m%d'),'%Y%m%d') day,count(*) value from 
     (SELECT * from park_info WHERE time_in<![CDATA[ >= ]]> #{0} and time_in <![CDATA[ <= ]]> #{1}) as b  
     GROUP BY day ORDER BY day;
   </select>
-  <select id="selectCountBycar" resultType="hust.parksys.entity.CommonMap" parameterType="java.lang.String" >
+  <select id="selectCountBycar1" resultType="hust.parksys.entity.CommonMap" parameterType="java.lang.String" >
     SELECT car_num value1,count(*) value2 from 
     (SELECT * from park_info 
     WHERE time_in <![CDATA[ >= ]]> #{0} and time_in <![CDATA[ <= ]]> #{1}) as b 
     GROUP BY value1 limit 0,20;
   </select>
-  <select id="selectByTime" resultType="hust.parksys.entity.ParkDetail" parameterType="java.lang.String" >
+  <select id="selectCarParkInfo" resultType="hust.parksys.dto.CarParkInfo" parameterType="java.lang.String" >
     SELECT a.car_num carNum,a.room_num roomNum,a.tel tel,b.time_in timeIn,b.time_out timeOut,b.park_name parkName
     FROM car_info a ,park_info b 
     WHERE a.car_num=b.car_num and time_in <![CDATA[ >= ]]> #{0} and time_in <![CDATA[ <= ]]> #{1}
   </select>
-  
+  <select id="selectParkTimeByCar" resultType="hust.parksys.entity.ParkTime" parameterType="java.lang.String" >
+    SELECT time_in timeIn,time_out timeOut from park_info
+    where car_num=#{0};
+  </select>
 </mapper>

@@ -17,13 +17,7 @@
     <link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap-table.css">
 
-    <style type="text/css">
-
-    .page-header {
-        margin: 30px 0 0 0;
-    }
-
-    </style>
+    <link rel="stylesheet" href="css/car_system.css">
 
 </head>
 <body>
@@ -50,33 +44,33 @@
                     <form id="tscl-form">
                         <!--<div class="panel panel-default">-->
                         <div class="form-group" style="margin-bottom:0px;">
-                            <label class="col-sm-1 control-label" style="text-align: right; margin-top:5px">时段：</label>
-                            <div class="col-sm-2">
+                            <label class="col-sm-1 col-sm-offset-1 control-label car-label-1" style="text-align: right; margin-top:5px">日期</label>
+                            <div class="col-sm-2 car-div-1">
                                 <select  class="form-control" name="recentDays" id="tscl-recentDays">
-                                    <option value="">请选择</option>
+                                    <option value="">手动选择</option>
                                     <option value="最近1天">最近1天</option>
                                     <option value="最近3天">最近3天</option>
                                     <option value="最近7天">最近7天</option>
                                     <option value="最近10天">最近10天</option>
                                 </select>
                             </div>
-                            <label class="col-sm-1 control-label" style="text-align: right; margin-top:5px">开始日期：</label>
-                            <div class="col-sm-2">
+                            <label class="col-sm-1 control-label car-label-2" style="text-align: right; margin-top:5px">开始日期：</label>
+                            <div class="col-sm-2 car-div-2">
                                 <input type="date" class="form-control" name="startDay" id="tscl-startDay" value="2017-03-20"/>
                             </div>
-                            <label class="col-sm-1 control-label" style="text-align: right; margin-top:5px">结束日期：</label>
-                            <div class="col-sm-2">
+                            <label class="col-sm-1 control-label car-label-2" style="text-align: right; margin-top:5px">结束日期：</label>
+                            <div class="col-sm-2 car-div-2">
                                 <input type="date" class="form-control" name="endDay" id="tscl-endDay" value="2017-03-22"/>
                             </div>
-                            <label class="col-sm-1 control-label" style="text-align: right; margin-top:5px">来源：</label>
-                            <div class="col-sm-1">
+                            <label class="col-sm-1 control-label car-label-1" style="text-align: right; margin-top:5px">来源：</label>
+                            <div class="col-sm-2 car-div-1">
                                 <select  class="form-control" name="parkName" id="tscl-parkName">
                                     <option value="">请选择</option>
                                     <option value="全部" selected>全部</option>
                                     <option value="理想城">理想城</option>
                                 </select>
                             </div>
-                            <div class="col-sm-1">
+                            <div class="col-sm-1 car-div-3">
                                 <button type="button" class="btn btn-primary" id="tscl-btn">查询</button>
                             </div>
                         </div>
@@ -109,12 +103,26 @@
                     <form id="tssd-form">
                         <!--<div class="panel panel-default">-->
                         <div class="form-group" style="margin-bottom:0px;">
-                            <label class="col-sm-1 col-sm-offset-1 control-label" style="text-align: right; margin-top:5px">日期：</label>
-                            <div class="col-sm-2">
-                                <input type="date" class="form-control" name="date" id="tssd-date" value="2017-04-20"/>
+                            <label class="col-sm-1 control-label car-label-1" style="text-align: right; margin-top:5px">日期：</label>
+                            <div class="col-sm-2 car-div-1">
+                                <select  class="form-control" name="recentDays" id="tssd-recentDays">
+                                    <option value="">手动选择</option>
+                                    <option value="最近1天">最近1天</option>
+                                    <option value="最近3天">最近3天</option>
+                                    <option value="最近7天">最近7天</option>
+                                    <option value="最近10天">最近10天</option>
+                                </select>
                             </div>
-                            <label class="col-sm-1 control-label" style="text-align: right; margin-top:5px">时间段：</label>
-                            <div class="col-sm-2">
+                            <label class="col-sm-1 control-label car-label-2" style="text-align: right; margin-top:5px">开始日期：</label>
+                            <div class="col-sm-2 car-div-2">
+                                <input type="date" class="form-control" name="startDay" id="tssd-startDay" value="2017-03-20"/>
+                            </div>
+                            <label class="col-sm-1 control-label car-label-2" style="text-align: right; margin-top:5px">结束日期：</label>
+                            <div class="col-sm-2 car-div-2">
+                                <input type="date" class="form-control" name="endDay" id="tssd-endDay" value="2017-03-22"/>
+                            </div>
+                            <label class="col-sm-1 control-label car-label-1" style="text-align: right; margin-top:5px">时段：</label>
+                            <div class="col-sm-2 car-div-2">
                                 <select  class="form-control" name="timeSlot" id="tssd-time">
                                     <option value="">请选择</option>
                                     <option value="00:00-02:00">00:00-02:00</option>
@@ -131,15 +139,15 @@
                                     <option value="22:00-24:00">22:00-24:00</option>
                                 </select>
                             </div>
-                            <label class="col-sm-1 control-label" style="text-align: right; margin-top:5px">来源：</label>
-                            <div class="col-sm-2">
+                            <label class="col-sm-1 control-label car-label-1" style="text-align: right; margin-top:5px">来源：</label>
+                            <div class="col-sm-2 car-div-1">
                                 <select  class="form-control" name="parkName" id="tssd-parkName">
                                     <option value="">请选择</option>
                                     <option value="全部" selected>全部</option>
                                     <option value="理想城">理想城</option>
                                 </select>
                             </div>
-                            <div class="col-sm-1 ">
+                            <div class="col-sm-1 car-div-3">
                                 <button type="button" class="btn btn-primary" id="tssd-btn">查询</button>
                             </div>
                         </div>
@@ -165,33 +173,33 @@
                     <form id="tspd-form">
                         <!--<div class="panel panel-default">-->
                         <div class="form-group" style="margin-bottom:0px;">
-                            <label class="col-sm-1 control-label" style="text-align: right; margin-top:5px">时段：</label>
-                            <div class="col-sm-2">
+                            <label class="col-sm-1 col-sm-offset-1 control-label car-label-1" style="text-align: right; margin-top:5px">日期：</label>
+                            <div class="col-sm-2 car-div-1">
                                 <select  class="form-control" name="recentDays" id="tspd-recentDays">
-                                    <option value="">请选择</option>
+                                    <option value="">手动选择</option>
                                     <option value="最近1天">最近1天</option>
                                     <option value="最近3天">最近3天</option>
                                     <option value="最近7天">最近7天</option>
                                     <option value="最近10天">最近10天</option>
                                 </select>
                             </div>
-                            <label class="col-sm-1 control-label" style="text-align: right; margin-top:5px">开始日期：</label>
-                            <div class="col-sm-2">
+                            <label class="col-sm-1 control-label car-label-2" style="text-align: right; margin-top:5px">开始日期：</label>
+                            <div class="col-sm-2 car-div-2">
                                 <input type="date" class="form-control" name="startDay" id="tspd-startDay" value="2017-03-20"/>
                             </div>
-                            <label class="col-sm-1 control-label" style="text-align: right; margin-top:5px">结束日期：</label>
-                            <div class="col-sm-2">
+                            <label class="col-sm-1 control-label car-label-2" style="text-align: right; margin-top:5px">结束日期：</label>
+                            <div class="col-sm-2 car-div-2">
                                 <input type="date" class="form-control" name="endDay" id="tspd-endDay" value="2017-04-22"/>
                             </div>
-                            <label class="col-sm-1 control-label" style="text-align: right; margin-top:5px">来源：</label>
-                            <div class="col-sm-1">
+                            <label class="col-sm-1 control-label car-label-1" style="text-align: right; margin-top:5px">来源：</label>
+                            <div class="col-sm-1 car-div-1">
                                 <select  class="form-control" name="parkName" id="tspd-parkName">
                                     <option value="">请选择</option>
                                     <option value="全部" selected>全部</option>
                                     <option value="理想城">理想城</option>
                                 </select>
                             </div>
-                            <div class="col-sm-1">
+                            <div class="col-sm-1 car-div-3">
                                 <button type="button" class="btn btn-primary" id="tspd-btn">查询</button>
                             </div>
                         </div>
@@ -218,37 +226,37 @@
                             <!--<div class="panel panel-default">-->
                             <div class="form-group" style="margin-bottom:0px;">
                                 <div class="row">
-                                    <label class="col-sm-2 control-label" style="text-align: right; margin-top:5px">时段：</label>
-                                    <div class="col-sm-4">
+                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">日期：</label>
+                                    <div class="col-sm-4 car-div-2">
                                         <select  class="form-control" name="recentDays" id="tytj-recentDays-01">
-                                            <option value="">请选择</option>
+                                            <option value="">手动选择</option>
                                             <option value="最近1天">最近1天</option>
                                             <option value="最近3天">最近3天</option>
                                             <option value="最近7天">最近7天</option>
                                             <option value="最近10天">最近10天</option>
                                         </select>
                                     </div>
-                                    <label class="col-sm-2 control-label" style="text-align: right; margin-top:5px">来源：</label>
-                                    <div class="col-sm-2">
+                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">来源：</label>
+                                    <div class="col-sm-2 car-div-2">
                                         <select  class="form-control" name="parkName" id="tytj-parkName-01">
                                             <option value="">请选择</option>
                                             <option value="全部" selected>全部</option>
                                             <option value="理想城">理想城</option>
                                         </select>
                                     </div>
-                                    <div class="col-sm-2">
-                                        <button type="button" class="btn btn-primary" id="tytj-btn-01">查询</button>
-                                    </div>
                                 </div>
                                 <div class="row" style="height: 5px;"></div>
                                 <div class="row">
-                                    <label class="col-sm-2 control-label" style="text-align: right; margin-top:5px">开始日期：</label>
-                                    <div class="col-sm-4">
+                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">开始日期：</label>
+                                    <div class="col-sm-4 car-div-2 ">
                                         <input type="date" class="form-control" name="startDay" id="tytj-startDay-01" value="2017-04-12"/>
                                     </div>
-                                    <label class="col-sm-2 control-label" style="text-align: right; margin-top:5px">结束日期：</label>
-                                    <div class="col-sm-4">
+                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">结束日期：</label>
+                                    <div class="col-sm-4 car-div-2">
                                         <input type="date" class="form-control" name="endDay" id="tytj-endDay-01" value="2017-04-22"/>
+                                    </div>
+                                    <div class="col-sm-2 car-div-3">
+                                        <button type="button" class="btn btn-primary" id="tytj-btn-01">查询</button>
                                     </div>
                                 </div>
                             </div>
@@ -264,37 +272,37 @@
                             <!--<div class="panel panel-default">-->
                             <div class="form-group" style="margin-bottom:0px;">
                                 <div class="row">
-                                    <label class="col-sm-2 control-label" style="text-align: right; margin-top:5px">时段：</label>
-                                    <div class="col-sm-4">
+                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">日期：</label>
+                                    <div class="col-sm-4 car-div-2">
                                         <select  class="form-control" name="recentDays" id="tytj-recentDays-02">
-                                            <option value="">请选择</option>
+                                            <option value="">手动选择</option>
                                             <option value="最近1天">最近1天</option>
                                             <option value="最近3天">最近3天</option>
                                             <option value="最近7天">最近7天</option>
                                             <option value="最近10天">最近10天</option>
                                         </select>
                                     </div>
-                                    <label class="col-sm-2 control-label" style="text-align: right; margin-top:5px">来源：</label>
-                                    <div class="col-sm-2">
+                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">来源：</label>
+                                    <div class="col-sm-2 car-div-2">
                                         <select  class="form-control" name="parkName" id="tytj-parkName-02">
                                             <option value="">请选择</option>
                                             <option value="全部" selected>全部</option>
                                             <option value="理想城">理想城</option>
                                         </select>
                                     </div>
-                                    <div class="col-sm-2">
-                                        <button type="button" class="btn btn-primary" id="tytj-btn-02">查询</button>
-                                    </div>
                                 </div>
                                 <div class="row" style="height: 5px;"></div>
                                 <div class="row">
-                                    <label class="col-sm-2 control-label" style="text-align: right; margin-top:5px">开始日期：</label>
-                                    <div class="col-sm-4">
+                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">开始日期：</label>
+                                    <div class="col-sm-4 car-div-2">
                                         <input type="date" class="form-control" name="startDay" id="tytj-startDay-02" value="2017-03-20"/>
                                     </div>
-                                    <label class="col-sm-2 control-label" style="text-align: right; margin-top:5px">结束日期：</label>
-                                    <div class="col-sm-4">
+                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">结束日期：</label>
+                                    <div class="col-sm-4 car-div-2">
                                         <input type="date" class="form-control" name="endDay" id="tytj-endDay-02" value="2017-04-22"/>
+                                    </div>
+                                    <div class="col-sm-2 car-div-3">
+                                        <button type="button" class="btn btn-primary" id="tytj-btn-02">查询</button>
                                     </div>
                                 </div>
                             </div>

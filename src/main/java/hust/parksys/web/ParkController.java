@@ -1,10 +1,11 @@
 package hust.parksys.web;
 
+import hust.parksys.dto.CarParkInfo;
 import hust.parksys.dto.KeyCarParkInfo;
 import hust.parksys.dto.ParkFrequency;
+import hust.parksys.dto.ParkTimeAndType;
 import hust.parksys.entity.CommonMap;
 import hust.parksys.entity.CountByDays;
-import hust.parksys.entity.ParkDetail;
 import hust.parksys.service.CarInfoService;
 import hust.parksys.service.ParkInfoService;
 
@@ -51,7 +52,7 @@ public class ParkController {
 	// 2 特殊时段
 	@RequestMapping(value = "/specialtime")
 	@ResponseBody
-	public List<ParkDetail> specialtime(
+	public List<CarParkInfo> specialtime(
 			@RequestParam(value = "startDay", defaultValue = "2017-04-05") String startDay,
 			@RequestParam(value = "endDay", defaultValue = "2017-04-20") String endDay,
 			@RequestParam(value = "timeSlot", defaultValue = "08:00-10:00") String timeSlot,
@@ -60,7 +61,7 @@ public class ParkController {
 		// timeEnd="2017-03-30 22:39:51";
 		System.out.println("startDay:" + startDay + "endDay:" + endDay
 				+ ",timeSlot:" + timeSlot);
-		List<ParkDetail> parkList = parkInfoService.selectByTime(startDay,endDay,
+		List<CarParkInfo> parkList = parkInfoService.selectByTime(startDay,endDay,
 				timeSlot, parkName);
 		return parkList;
 
@@ -77,6 +78,21 @@ public class ParkController {
 		System.out.println(startDay + " " + endDay + " " + parkName);
 		List<ParkFrequency> list = parkInfoService.selectFreByTime(startDay,
 				endDay, parkName);
+		return list;
+	}
+	// 3.1 大于某一频度的所有车辆的详细信息
+	@RequestMapping(value = "/sepcialfredetail")
+	@ResponseBody
+	public List<CarParkInfo> sepcialFreDetail(
+			@RequestParam(value = "startDay", defaultValue = "2017-04-15") String startDay,
+			@RequestParam(value = "endDay", defaultValue = "2017-04-22") String endDay,
+			@RequestParam(value = "fre", defaultValue = "20") String fre,
+			@RequestParam(value = "parkName", defaultValue = "理想城停车场") String parkName) {
+		System.out.println("进入sepcialfredetail");
+		System.out.println(startDay + " " + endDay + " "+fre+ " " + parkName);
+		List<CarParkInfo> list = parkInfoService.selectSepcialFreDetail(startDay,
+				endDay, fre,parkName);
+		System.out.println(list.size());
 		return list;
 	}
 
@@ -104,5 +120,15 @@ public class ParkController {
 		System.out.println("进入sepcialfrequencies");
 		System.out.println(startDay + " " + endDay + " " + parkName);
 		return parkInfoService.selectCountBycar(startDay, endDay, parkName);
+	}
+	//通用接口：查询某辆车的所有进出时间
+	@ResponseBody
+	@RequestMapping(value = "/parktimeandtype")
+	public List<ParkTimeAndType> selectParkTimeAndType(
+			@RequestParam(value = "carNum", defaultValue = "鄂A92D3D") String carNum,
+			@RequestParam(value = "parkName", defaultValue = "理想城停车场") String parkName){
+		System.out.println("进入sepcialfrequencies");
+		System.out.println(carNum+" "+parkName);
+		return parkInfoService.selectParkTimeAndType(carNum,parkName);
 	}
 }
