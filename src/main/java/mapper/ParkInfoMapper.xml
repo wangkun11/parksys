@@ -1,35 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="hust.parksys.dao.ParkInfoDao" >
-  <resultMap id="BaseResultMap" type="hust.parksys.dto.ParkDetail" >
-    
-    <result column="car_num" property="carNum" jdbcType="VARCHAR" />
-    <result column="tollman" property="tollman" jdbcType="VARCHAR" />
-    <result column="park_name" property="parkName" jdbcType="VARCHAR" />
-    <result column="time_in" property="timeIn" jdbcType="TIMESTAMP" />
-    <result column="time_out" property="timeOut" jdbcType="TIMESTAMP" />
-    <result column="duration" property="duration" jdbcType="VARCHAR" />
-    <result column="tolltype" property="tolltype" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    car_num, tollman, park_name, time_in, time_out, duration
-  </sql>
-  <select id="selectByCarnum" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from park_info
-    where car_num = #{car_num,jdbcType=VARCHAR}
+   
+  <select id="selectFreByTime" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    SELECT count(*) as a from 
+    (SELECT car_num from park_info 
+    WHERE time_in <![CDATA[ >= ]]> #{0} and time_in <![CDATA[ <= ]]> #{1}) as b 
+    GROUP BY car_num ORDER BY a;
   </select>
-  <select id="selectByTime" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from park_info
-    where time_in <![CDATA[ >=  ]]> #{0} and time_in <![CDATA[ <=  ]]> #{1}
+  <select id="selectCountByDay" resultType="hust.parksys.entity.CountByDays" parameterType="java.lang.String" >
+    SELECT str_to_date(DATE_FORMAT(time_in,'%Y%m%d'),'%Y%m%d') day,count(*) value from 
+    (SELECT * from park_info WHERE time_in<![CDATA[ >= ]]> #{0} and time_in <![CDATA[ <= ]]> #{1}) as b  
+    GROUP BY day ORDER BY day;
   </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select 
-    <include refid="Base_Column_List" />
-    from park_info
+  <select id="selectCountBycar" resultType="hust.parksys.entity.CommonMap" parameterType="java.lang.String" >
+    SELECT car_num value1,count(*) value2 from 
+    (SELECT * from park_info 
+    WHERE time_in <![CDATA[ >= ]]> #{0} and time_in <![CDATA[ <= ]]> #{1}) as b 
+    GROUP BY value1 limit 0,20;
+  </select>
+  <select id="selectByTime" resultType="hust.parksys.entity.ParkDetail" parameterType="java.lang.String" >
+    SELECT a.car_num carNum,a.room_num roomNum,a.tel tel,b.time_in timeIn,b.time_out timeOut,b.park_name parkName
+    FROM car_info a ,park_info b 
+    WHERE a.car_num=b.car_num and time_in <![CDATA[ >= ]]> #{0} and time_in <![CDATA[ <= ]]> #{1}
   </select>
   
 </mapper>
