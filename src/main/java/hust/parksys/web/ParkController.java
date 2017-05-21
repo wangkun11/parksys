@@ -117,7 +117,7 @@ public class ParkController {
 			@RequestParam(value = "startDay", defaultValue = "2017-03-20") String startDay,
 			@RequestParam(value = "endDay", defaultValue = "2017-04-22") String endDay,
 			@RequestParam(value = "parkName", defaultValue = "理想城停车场") String parkName) {
-		System.out.println("进入sepcialfrequencies");
+		System.out.println("进入countbycar");
 		System.out.println(startDay + " " + endDay + " " + parkName);
 		return parkInfoService.selectCountBycar(startDay, endDay, parkName);
 	}

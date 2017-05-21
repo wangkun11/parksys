@@ -100,9 +100,19 @@ $(function () {
                         clickToSelect: true,//是否启用点击选中行
                         buttonsAlign:'right',//按钮对齐方式
                         columns: [{
+                            //field: 'Number',//可不加
+                            title: '序号',//标题  可不加
+                            formatter: function (value, row, index) {
+                                return index+1;
+                            }
+                        },{
                             field: 'carNum',
                             title: '车牌号',
-                            align: 'center'
+                            align: 'center',
+                            formatter:function(value,row,index){
+                                var a = '<a class="tssd" href="#carModal" data-toggle="modal" data-target="#carModal" onclick="loadModal(this,'+"tssd"+')">'+value+'</a>';
+                                return a;
+                            }
                         }, {
                             field: 'roomNum',
                             title: '房屋号',

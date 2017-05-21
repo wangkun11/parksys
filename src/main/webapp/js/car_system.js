@@ -1,7 +1,10 @@
 /**
  * Created by Administrator on 2017/5/18.
  */
+
 $(function(){
+
+
 
     function render_tscl(data){
         $.ajax({
@@ -44,9 +47,20 @@ $(function(){
                     clickToSelect: true,//是否启用点击选中行
                     buttonsAlign:'right',//按钮对齐方式
                     columns: [{
+                        //field: 'Number',//可不加
+                        title: '序号',//标题  可不加
+                        formatter: function (value, row, index) {
+                            return index+1;
+                        }
+                    },{
                         field: 'carNum',
                         title: '车牌号',
-                        align: 'center'
+                        align: 'center',
+                        formatter:function(value,row,index){
+                            //var a = '<span type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">'+value+'</span>';
+                            var a = '<a class="tscl"  href="#carModal" data-toggle="modal" data-target="#carModal" onclick="loadModal(this,'+"tscl"+')">'+value+'</a>';
+                            return a;
+                        }
                     }, {
                         field: 'roomNum',
                         title: '房间号',
@@ -81,7 +95,16 @@ $(function(){
                 $('#tscl-table').bootstrapTable('load',data);
             }
         });
+
+
     }
+
+    //$("a[name='tscl']").click(function(e){
+    //    e.preventDefault();
+    //    $("#carModal").modal("hide");
+    //    console.log("dddd") ;
+    //});
+
 
     function render_tssd(data){
         $.ajax({
@@ -112,9 +135,19 @@ $(function(){
                     clickToSelect: true,//是否启用点击选中行
                     buttonsAlign:'right',//按钮对齐方式
                     columns: [{
+                        //field: 'Number',//可不加
+                        title: '序号',//标题  可不加
+                        formatter: function (value, row, index) {
+                            return index+1;
+                        }
+                    },{
                         field: 'carNum',
                         title: '车牌号',
-                        align: 'center'
+                        align: 'center',
+                        formatter:function(value,row,index){
+                            var a = '<a class="tssd" href="#carModal" data-toggle="modal" data-target="#carModal" onclick="loadModal(this,'+"tssd"+')">'+value+'</a>';
+                            return a;
+                        }
                     }, {
                         field: 'roomNum',
                         title: '房屋号',
@@ -172,9 +205,87 @@ $(function(){
                     data1.push(data[i].frequency);
                     data2.push(data[i].count);
                 }
+                //barChart(barchart,data1,data2);
                 barChart(barchart,data1,data2);
 
             }
+        });
+
+        $.ajax({
+            type:'post',
+
+            //url:'tspd_data_02.json',
+            url:'/parksys/sepcialfredetail',
+            dataType:'json',
+            data:''||data,
+            success:function(data){
+                //console.log(data);
+                $('#tspd-table').bootstrapTable({
+                    cache:false,
+                    //data:data,
+                    striped: true, //是否显示行间隔色
+                    pagination:true,//是否分页
+                    //dataField: "res",
+                    pageNumber: 1, //初始化加载第一页，默认第一页
+                    queryParamsType:'limit',//查询参数组织方式
+                    sidePagination:'client',//默认是客户端分页
+                    //客户端分页是一次性将所有的数据加载到浏览器的缓存中，因此无需服务端进行计算总页数。
+                    pageSize:10,//单页记录数
+                    pageList:[10,15,20],//分页步进值
+                    showRefresh:true,//刷新按钮
+                    showColumns:true,
+                    clickToSelect: true,//是否启用点击选中行
+                    buttonsAlign:'right',//按钮对齐方式
+                    columns: [{
+                        //field: 'Number',//可不加
+                        title: '序号',//标题  可不加
+                        formatter: function (value, row, index) {
+                            return index+1;
+                        }
+                    },{
+                        field: 'carNum',
+                        title: '车牌号',
+                        align: 'center',
+                        formatter:function(value,row,index){
+                            var a = '<a class="tspd" href="#carModal" data-toggle="modal" data-target="#carModal" onclick="loadModal(this,'+"tspd"+')">'+value+'</a>';
+                            return a;
+                        }
+                    }, {
+                        field: 'roomNum',
+                        title: '房屋号',
+                        align: 'center'
+                    }, {
+                        field: 'tel',
+                        title: '联系电话',
+                        align: 'center'
+                    },{
+                        field: 'timeIn',
+                        title: '入场时间',
+                        align: 'center',
+                        sortable: true,
+                        sortOrder: 'desc',
+                    },{
+                        field: 'timeOut',
+                        title: '出场时间',
+                        align: 'center',
+                        sortable: true,
+                        sortOrder: 'desc',
+                    },{
+                        field: 'parkName',
+                        title: '停车场名称',
+                        align: 'center',
+                        sortable: true,
+                        sortOrder: 'desc',
+                    }],
+                    locale:'zh-CN',//中文支持,
+                    //responseHandler:function(data){
+                    //    //在ajax获取到数据，渲染表格之前，修改数据源
+                    //    return data.response.rows;
+                    //}
+                });
+                $('#tspd-table').bootstrapTable('load',data);
+            }
+
         });
     }
 
@@ -223,7 +334,9 @@ $(function(){
             }
         });
     }
+
     render_tscl();
+
     $('#myTab a:first').tab('show');
     $('#myTab a').click(function (e) {
         e.preventDefault();

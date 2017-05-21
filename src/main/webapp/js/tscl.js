@@ -1,6 +1,88 @@
 /**
  * Created by Administrator on 2017/5/18.
  */
+function loadModal(obj,param) {
+    //console.log(param);
+    console.log(param.getAttribute('id'));
+    //console.log('$(this).val()'+$(obj).text());
+    var tabName=param.getAttribute('id');
+    //console.log( tabName);
+    var carNum=$(obj).text();
+    $("#carModalLabel").innerText=carNum;
+    var parkName='';
+    switch (tabName){
+        case 'tscl':parkName=$("#tscl-parkName option:selected").attr('value');
+            break;
+        case 'tssd':parkName=$("#tssd-parkName option:selected").attr('value');
+            break;
+        case 'tspd':parkName=$("#tspd-parkName option:selected").attr('value');
+            break;
+        default :break;
+    }
+
+    $("#carModal").on('show.bs.modal',function(event){
+        //var a=$(event.relatedTarget);
+        //var recipient = carNum;
+        var modal = $(this)
+        modal.find('.modal-title').text(carNum);
+        //modal.find('.modal-body table').val(recipient);
+
+        $.ajax({
+            //cache:false,
+            type:'post',
+            //url:'http://115.156.208.192:8080/parksys/specialtime',
+            //url:'modal_table_data.json',
+            url:'/parksys/parktimeandtype',
+            dataType:'json',
+            data:{"carNum":carNum,"parkName":parkName},
+            success:function(data){
+                console.log('hh');
+                $('#modal-table').bootstrapTable({
+                cache:false,
+                //data:data,
+                striped: true, //是否显示行间隔色
+                pagination:true,//是否分页
+                //dataField: "res",
+                pageNumber: 1, //初始化加载第一页，默认第一页
+                queryParamsType:'limit',//查询参数组织方式
+                sidePagination:'client',//默认是客户端分页
+                //客户端分页是一次性将所有的数据加载到浏览器的缓存中，因此无需服务端进行计算总页数。
+                pageSize:10,//单页记录数
+                pageList:[10,15,20],//分页步进值
+                showRefresh:true,//刷新按钮
+                showColumns:true,
+                clickToSelect: true,//是否启用点击选中行
+                buttonsAlign:'right',//按钮对齐方式
+                columns: [{
+                    field: 'time',
+                    title: '通过时间',
+                    align: 'center',
+                    sortable: true,
+                    sortOrder: 'desc',
+                },{
+                    field: 'type',
+                    title: '出入口',
+                    align: 'center'
+                }],
+                locale:'zh-CN',//中文支持,
+                //responseHandler:function(data){
+                //    //在ajax获取到数据，渲染表格之前，修改数据源
+                //    return data.response.rows;
+                //}
+            });
+            $('#modal-table').bootstrapTable('load',data);
+
+            }
+        });
+    });
+
+
+
+
+}
+
+
+
 $(function () {
     $("#tscl-recentDays").change(function (){
         var today=new Date();
@@ -61,12 +143,14 @@ $(function () {
 
     });
 
+
+
+
     $("#tscl-btn").click(function(){
         var startDay=$("#tscl-startDay").val();
         var endDay=$("#tscl-endDay").val();
         var recentDays=$("#tscl-recentDays option:selected").attr('value');
         var parkName=$("#tscl-parkName option:selected").attr('value');
-
         if(startDay==""){
             alert("查询开始日期不能为空！");
         }else if(endDay==""){
@@ -112,9 +196,19 @@ $(function () {
                         clickToSelect: true,//是否启用点击选中行
                         buttonsAlign:'right',//按钮对齐方式
                         columns: [{
+                            //field: 'Number',//可不加
+                            title: '序号',//标题  可不加
+                            formatter: function (value, row, index) {
+                                return index+1;
+                            }
+                        },{
                             field: 'carNum',
                             title: '车牌号',
-                            align: 'center'
+                            align: 'center',
+                            formatter:function(value,row,index){
+                                var a = '<a class="tscl" href="#carModal" data-toggle="modal" data-target="#carModal" onclick="loadModal(this,,'+"tscl"+')">'+value+'</a>';
+                                return a;
+                            }
                         }, {
                             field: 'roomNum',
                             title: '房间号',
@@ -152,7 +246,15 @@ $(function () {
             });
         }
     });
+
+    //$("a.tscl").click(function(){
+    //   console.log("dddd") ;
+    //});
 });
+
+//function loadTsclCar(){
+//
+//}
 
 function pieChart(piechart,data1,data2){
     option = {
@@ -218,4 +320,5 @@ function pieChart(piechart,data1,data2){
         }]
     };
     piechart.setOption(option);
+    //piechart.on('click',loadTsclCar);
 }
