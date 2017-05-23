@@ -33,44 +33,50 @@ public class ParkController {
 	@Autowired
 	private CarInfoService carInfoService;
 
-	//1、车辆 
-	//1。1 所有车辆信息
+	// 1、车辆
+	// 1。1 所有车辆信息
 	@ResponseBody
 	@RequestMapping(value = "/allcars")
-	public List<DtoCar> selectallcars() {		
-		List<DtoCar> list = carInfoService.selectAllCars();		
+	public List<DtoCar> selectallcars() {
+		List<DtoCar> list = carInfoService.selectAllCars();
 		return list;
 	}
+
 	// 1。2 重点车辆比例
 	@ResponseBody
 	@RequestMapping(value = "/keycarpercent")
-	public DtoKeyCarPercent keycarpercent() {		
-		DtoKeyCarPercent dtoKeyCarPercent=carInfoService.selectKeycarpercent();
+	public DtoKeyCarPercent keycarpercent() {
+		DtoKeyCarPercent dtoKeyCarPercent = carInfoService
+				.selectKeycarpercent();
 		return dtoKeyCarPercent;
 	}
-	//1.3 重点车辆详细信息
+
+	// 1.3 重点车辆详细信息
 	@ResponseBody
 	@RequestMapping(value = "/keycardetail")
-	public List<DtoCar> keycardetail() {		
-		List<DtoCar> list=carInfoService.selectKeycars();
+	public List<DtoCar> keycardetail() {
+		List<DtoCar> list = carInfoService.selectKeycars();
 		return list;
 	}
-	//1.4 设为重点车辆
+
+	// 1.4 设为重点车辆
 	@ResponseBody
 	@RequestMapping(value = "/addkeycar")
 	public void addkeycar(
-			@RequestParam(value = "carNum", defaultValue = "鄂A92D3D") String carNum) {		
+			@RequestParam(value = "carNum", defaultValue = "鄂A92D3D") String carNum) {
 		carInfoService.addKeycar(carNum);
-		return ;
+		return;
 	}
-	//1.5 取消重点车辆标记
+
+	// 1.5 取消重点车辆标记
 	@ResponseBody
 	@RequestMapping(value = "/delkeycar")
 	public void delkeycar(
-			@RequestParam(value = "carNum", defaultValue = "鄂A92D3D") String carNum) {		
+			@RequestParam(value = "carNum", defaultValue = "鄂A92D3D") String carNum) {
 		carInfoService.delKeycar(carNum);
-		return ;
+		return;
 	}
+
 	// 2 特殊时段
 	@RequestMapping(value = "/specialtime")
 	@ResponseBody
@@ -83,14 +89,14 @@ public class ParkController {
 		// timeEnd="2017-03-30 22:39:51";
 		System.out.println("startDay:" + startDay + "endDay:" + endDay
 				+ ",timeSlot:" + timeSlot);
-		List<CarParkInfo> parkList = parkInfoService.selectByTime(startDay,endDay,
-				timeSlot, parkName);
+		List<CarParkInfo> parkList = parkInfoService.selectByTime(startDay,
+				endDay, timeSlot, parkName);
 		return parkList;
 
 	}
 
 	// 3 频度
-	//3.1 频度柱状图
+	// 3.1 频度柱状图
 	@RequestMapping(value = "/sepcialfre")
 	@ResponseBody
 	public List<ParkFrequency> sepcialFrequencies(
@@ -103,6 +109,7 @@ public class ParkController {
 				endDay, parkName);
 		return list;
 	}
+
 	// 3.2 大于某一频度的所有车辆的详细信息
 	@RequestMapping(value = "/sepcialfredetail")
 	@ResponseBody
@@ -112,14 +119,15 @@ public class ParkController {
 			@RequestParam(value = "fre", defaultValue = "20") String fre,
 			@RequestParam(value = "parkName", defaultValue = "理想城停车场") String parkName) {
 		System.out.println("进入sepcialfredetail");
-		System.out.println(startDay + " " + endDay + " "+fre+ " " + parkName);
+		System.out
+				.println(startDay + " " + endDay + " " + fre + " " + parkName);
 		List<DtoCar> list = parkInfoService.selectSepcialFreDetail(startDay,
-				endDay, fre,parkName);
+				endDay, fre, parkName);
 		System.out.println(list.size());
 		return list;
 	}
 
-	// 4  统计分析
+	// 4 统计分析
 	// 4.1 每天的停车量柱状图
 	@RequestMapping(value = "/prakcount")
 	@ResponseBody
@@ -133,34 +141,52 @@ public class ParkController {
 				endDay, parkName);
 		return list;
 	}
+
 	// 4.2 每个省份的车辆数
 	@ResponseBody
 	@RequestMapping(value = "/carperprovince")
-	public List<CommonMap> carperprovince() {		
+	public List<CommonMap> carperprovince() {
 		return carInfoService.selectCarPerProvince();
 	}
+
 	// 4.3 每一栋的车辆数
 	@ResponseBody
 	@RequestMapping(value = "/carperblock")
 	public List<CommonMap> carperblock() {
 		return carInfoService.selectCarPerBlock();
 	}
-	//4.4 每一栋的具体车辆
+
+	// 4.4 每一栋的具体车辆
 	@ResponseBody
 	@RequestMapping(value = "/blockcardetail")
 	public List<DtoCar> blockcardetail(
 			@RequestParam(value = "dh", defaultValue = "1") String dh) {
 		return carInfoService.selectBlockCarDetail(dh);
 	}
-	//5 通用接口：
-	//1、查询某辆车的所有进出时间
+
+	// 4.5 总车辆
+	@ResponseBody
+	@RequestMapping(value = "/allcarount")
+	public String allcarCount() {
+		return "1294";
+	}
+
+	// 4.6 总出入量
+	@ResponseBody
+	@RequestMapping(value = "/allparkcount")
+	public String allparkCount() {
+		return "45535";
+	}
+
+	// 5 通用接口：
+	// 1、查询某辆车的所有进出时间
 	@ResponseBody
 	@RequestMapping(value = "/parktimeandtype")
 	public List<ParkTimeAndType> selectParkTimeAndType(
 			@RequestParam(value = "carNum", defaultValue = "鄂A92D3D") String carNum,
-			@RequestParam(value = "parkName", defaultValue = "理想城停车场") String parkName){
+			@RequestParam(value = "parkName", defaultValue = "理想城停车场") String parkName) {
 		System.out.println("进入sepcialfrequencies");
-		System.out.println(carNum+" "+parkName);
-		return parkInfoService.selectParkTimeAndType(carNum,parkName);
+		System.out.println(carNum + " " + parkName);
+		return parkInfoService.selectParkTimeAndType(carNum, parkName);
 	}
 }
