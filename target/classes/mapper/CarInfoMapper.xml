@@ -12,11 +12,41 @@
   <sql id="Base_Column_List" >
     id, room_num, tel, remark, receipt_num, car_num
   </sql>
-  <select id="selectSpecialcars" resultMap="BaseResultMap">
+  <select id="selectAllCars" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from car_info
-    where car_num like '湘%'
   </select>
- 
+  <select id="selectKeyCarCount" resultType="java.lang.Integer">
+    select count(*)
+    from car_info where remark='1'
+  </select>
+  <select id="selectAllCarCount" resultType="java.lang.Integer">
+    select count(*)
+    from car_info
+  </select>
+ <select id="selectKeyCars" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from car_info where remark='1'
+  </select>
+  <update id="addKeycar">
+      update car_info set remark = '1' WHERE car_num=#{0}
+  </update>
+  <update id="delKeycar">
+      update car_info set remark = '0' WHERE car_num=#{0}
+  </update>
+  
+   <select id="selectCarPerProvince" resultType="hust.parksys.entity.CommonMap" >
+    SELECT left(car_num,1) AS value1,count(*) as value2 FROM car_info GROUP BY value1 ;
+  </select>
+  
+    <select id="selectCarPerBlock" resultType="hust.parksys.entity.CommonMap" >
+    SELECT left(room_num,1) AS value1,count(*) as value2 FROM car_info GROUP BY value1 ;
+  </select>
+  <select id="selectBlockCars" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />
+    from car_info where room_num like #{0}
+  </select>
 </mapper>

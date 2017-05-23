@@ -1,6 +1,7 @@
 package hust.parksys.service;
 
 import hust.parksys.dto.CarParkInfo;
+import hust.parksys.dto.DtoCar;
 import hust.parksys.dto.KeyCarParkInfo;
 import hust.parksys.dto.ParkFrequency;
 import hust.parksys.dto.ParkTimeAndType;
@@ -29,13 +30,9 @@ public interface ParkInfoService {
 	List<CommonMap> selectCountBycar(String startDay, String endDay,
 			String parkName);
 	// 标签3：详细信息
-	List<CarParkInfo> selectSepcialFreDetail(String startDay, String endDay,
+	List<DtoCar> selectSepcialFreDetail(String startDay, String endDay,
 			String fre, String parkName);
 
-	/**
-	 * @param carNum
-	 * @param parkName
-	 * @return
-	 */
 	List<ParkTimeAndType> selectParkTimeAndType(String carNum, String parkName);
+
 }

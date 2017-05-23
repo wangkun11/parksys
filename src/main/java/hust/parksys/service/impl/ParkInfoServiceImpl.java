@@ -1,14 +1,18 @@
 package hust.parksys.service.impl;
 
+import hust.parksys.dao.CarInfoDao;
 import hust.parksys.dao.ParkInfoDao;
 import hust.parksys.dto.CarParkInfo;
+import hust.parksys.dto.DtoCar;
 import hust.parksys.dto.KeyCarParkInfo;
 import hust.parksys.dto.ParkFrequency;
 import hust.parksys.dto.ParkTimeAndType;
+import hust.parksys.entity.CarInfo;
 import hust.parksys.entity.CommonMap;
 import hust.parksys.entity.CountByDays;
 import hust.parksys.entity.ParkTime;
 import hust.parksys.service.ParkInfoService;
+import hust.parksys.util.MyUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,6 +26,8 @@ import org.springframework.stereotype.Service;
 public class ParkInfoServiceImpl implements ParkInfoService{
 	@Autowired
 	private ParkInfoDao parkInfoDao;
+	@Autowired
+	private CarInfoDao carInfoDao;
 	
 	public List<CarParkInfo> selectByTime(String startDay, String endDay,
 			String timeSlot, String parkName) {
@@ -122,7 +128,7 @@ public class ParkInfoServiceImpl implements ParkInfoService{
 		}
 		return list2;
 	}
-	public List<CarParkInfo> selectSepcialFreDetail(String startDay,
+	public List<DtoCar> selectSepcialFreDetail(String startDay,
 			String endDay, String fre, String parkName) {
 		startDay+=" 00:00:00";
     	endDay+=" 24:00:00";
@@ -134,14 +140,14 @@ public class ParkInfoServiceImpl implements ParkInfoService{
 				carNums.add(entry.getValue1());
 			} 
 		}
-    	List<CarParkInfo> list=parkInfoDao.selectCarParkInfo(startDay, endDay, parkName);
-    	List<CarParkInfo> list1=new ArrayList<CarParkInfo>();
-    	for (CarParkInfo carParkInfo : list) {
-			if (carNums.contains(carParkInfo.getCarNum())) {
-				list1.add(carParkInfo);
+    	List<CarInfo> carInfos=carInfoDao.selectAllCars();
+    	List<CarInfo> list1=new ArrayList<CarInfo>();
+    	for (CarInfo carInfo : carInfos) {
+			if (carNums.contains(carInfo.getCarNum())) {
+				list1.add(carInfo);
 			}
 		}
-		return list1;
+		return MyUtil.CarInfoToDtoCar(list1);
 	}
 	
 	public List<ParkTimeAndType> selectParkTimeAndType(String carNum,
@@ -160,4 +166,6 @@ public class ParkInfoServiceImpl implements ParkInfoService{
 		}
 		return list;
 	}
+	
+	
 }
