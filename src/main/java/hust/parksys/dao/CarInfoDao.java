@@ -24,4 +24,8 @@ public interface CarInfoDao {
 	List<CommonMap> selectCarPerBlock();
 
 	List<CarInfo> selectBlockCars(String dh);
+
+	String selectRemark(String carNum);
+
+	List<CarInfo> selectDayCars(String timeStart, String timeEnd);
 }

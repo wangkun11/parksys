@@ -28,12 +28,13 @@ public class MyUtil {
 			DtoCar dtoCar=new DtoCar();
 			dtoCar.setCarNum(carInfo.getCarNum());
 			dtoCar.setTel(carInfo.getTel());
-			if (carInfo.getRemark()==null||"1"!=carInfo.getRemark()) {
+			
+			if (carInfo.getRemark()==null||!("1".equals(carInfo.getRemark().trim()))) {
 				dtoCar.setIskeyCar("否");
 			}else {
 				dtoCar.setIskeyCar("是");
 			}
-			
+			//System.out.println(dtoCar.getIskeyCar());
 			dtoCar.setBlock("理想城");
 			String string=carInfo.getRoomNum();
 			if (string==null) {

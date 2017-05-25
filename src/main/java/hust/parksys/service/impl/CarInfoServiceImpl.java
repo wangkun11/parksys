@@ -70,4 +70,21 @@ public class CarInfoServiceImpl implements CarInfoService {
 		return MyUtil.CarInfoToDtoCar(carInfos);
 	}
 
+	public String isKeyCar(String carNum) {
+		
+		String string=carInfoDao.selectRemark(carNum);
+		if ("1".equals(string)) {
+			return string;
+		}else {
+			return "0";
+		} 
+	}
+
+	public List<DtoCar> selectDayCarDetail(String day) {
+		String timeStart=day+" 00:00:00";
+		String timeEnd=day+" 24:00:00";
+		List<CarInfo> carInfos=carInfoDao.selectDayCars(timeStart,timeEnd);
+		return MyUtil.CarInfoToDtoCar(carInfos);
+	}
+
 }

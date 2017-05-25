@@ -1,6 +1,69 @@
+.navbar-default{
+    background-color: rgb(25, 26, 44);
+    border-color: rgb(39, 40, 61);
+}
+
+body{
+    background-color: rgb(25, 26, 44);
+}
+
+.nav-tabs.nav-justified>li>a,.nav-tabs.nav-justified>li>a:active{
+    border-bottom: 1px solid rgb(39, 40, 61);
+    color: rgb(181, 184,199 );
+}
 
 .page-header {
     margin: 30px 0 0 0;
+    border-bottom: 1px solid rgb(39, 40, 61);
+}
+
+.text-primary {
+    color: rgb(181, 184,199 );
+}
+.nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:focus, .nav-tabs.nav-justified>.active>a:hover {
+    border: 2px solid rgb(25, 26, 44);
+    border-bottom-color: #5c8de7;
+    color: rgb(251, 255,255);
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+    background-color: rgb(32, 36,63);
+}
+
+label{
+    color: rgb(183,183,195);
+}
+.form-control{
+    color: rgb(183,183,195);
+    background-color: rgb(37,39,62);
+    border: 1px solid rgb(25, 26, 44);
+}
+.btn-primary{
+    color: rgb(183,183,195);
+}
+
+#chart01,#chart02,#chart03,#chart,#tscl-detailInfo,#tssd-detailInfo{
+    background-color: rgb(37,39,62);
+    border: 5px solid rgb(25, 26, 44);
+}
+/*#tssd-select{*/
+    /*background-color: rgb(37,39,62);*/
+    /*border: 1px solid rgb(25, 26, 44);*/
+/*}*/
+
+#twoLabel .row{
+    height: 310px;
+    background-color: rgb(37,39,62);
+    border: 5px solid rgb(25, 26, 44);
+    color: rgb(183,183,195);
+
+}
+#num1{
+    text-align:center;
+    color: #ffffff;
+}
+#num2{
+    text-align:center;
+    color: #ff3e3e;
 }
 
 label.car-label-1{
@@ -17,4 +80,28 @@ div.car-div-2{
 }
 div.car-div-3{
     width: 90px;
+}
+
+.table{
+    color:#fc7b05 !important;
+}
+.bootstrap-table{
+    color:rgb(181, 184,199 );
+}
+
+.modal-body > .bootstrap-table {
+    color: #0f0f0f !important;
+}
+
+.modal-body >table{
+    color: #362e2a !important;
+}
+
+.modal{
+    margin: auto;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #5182e4;
 }

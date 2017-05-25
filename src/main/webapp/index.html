@@ -22,61 +22,103 @@
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation">
-    <div class="page-header">
-        <h3 class="text-center text-primary">车辆出入库信息系统</h3>
-    </div>
+    <!--<div class="page-header">-->
+        <!--<h3 class="text-center text-primary">车辆出入库信息系统</h3>-->
+        <img src="image/banner.jpg" width="1421" height="60" />
+    <!--</div>-->
     <!--<div class="jumbotron">-->
-    <div class="container-fluid" style="width: 100%;height: 1000px;">
+    <div class="container-fluid" style="width: 100%;height: 1200px;">
+        <!--tab-->
         <ul id="myTab" class="nav nav-tabs nav-justified " style="font-size: 18px;">
-            <li class="active"><a href="#tscl" name="tscl" data-toggle="tab" data-clicked=true><span class="glyphicon glyphicon-star">&nbsp;特殊车辆</span></a></li>
-            <li><a href="#tssd" name="tssd" data-toggle="tab" data-clicked=false><span class="glyphicon glyphicon-time">&nbsp;特殊时段</span></a></li>
-            <li><a href="#tspd" name="tspd" data-toggle="tab" data-clicked=false><span class="glyphicon glyphicon-signal">&nbsp;特殊频度</span></a></li>
-            <li><a href="#tytj" name="tytj" data-toggle="tab" data-clicked=false><span class="glyphicon glyphicon-asterisk">&nbsp;通用统计</span></a></li>
+            <li class="active"><a href="#tytj" name="tytj" data-toggle="tab" data-clicked=true><span class="glyphicon glyphicon-asterisk">&nbsp;统计</span></a></li>
+            <li><a href="#tscl" name="tscl" data-toggle="tab" data-clicked=false><span class="glyphicon glyphicon-star">&nbsp;车辆</span></a></li>
+            <li><a href="#tssd" name="tssd" data-toggle="tab" data-clicked=false><span class="glyphicon glyphicon-time">&nbsp;时段</span></a></li>
+            <li><a href="#tspd" name="tspd" data-toggle="tab" data-clicked=false><span class="glyphicon glyphicon-signal">&nbsp;频度</span></a></li>
         </ul>
-        <!--以上 href , name 待补充完整-->
+        <!--tab content-->
         <div id="myTabContent" class="tab-content" style="width: 100%;height: 100%;">
-            <div class="tab-pane fade in active" id="tscl">
+            <div class="tab-pane fade in active" id="tytj">
                 <div class="row">
-                    <div class="page-header">
-                        <h4 class="text-center text-primary"><strong></strong></h4>
-                        <!--重点车辆出入情况-->
-                    </div>
-                    <form id="tscl-form">
-                        <!--<div class="panel panel-default">-->
-                        <div class="form-group" style="margin-bottom:0px;">
-                            <label class="col-sm-1 col-sm-offset-1 control-label car-label-1" style="text-align: right; margin-top:5px">日期</label>
-                            <div class="col-sm-2 car-div-1">
-                                <select  class="form-control" name="recentDays" id="tscl-recentDays">
-                                    <option value="">手动选择</option>
-                                    <option value="最近1天">最近1天</option>
-                                    <option value="最近3天">最近3天</option>
-                                    <option value="最近7天">最近7天</option>
-                                    <option value="最近10天">最近10天</option>
-                                </select>
-                            </div>
-                            <label class="col-sm-1 control-label car-label-2" style="text-align: right; margin-top:5px">开始日期：</label>
-                            <div class="col-sm-2 car-div-2">
-                                <input type="date" class="form-control" name="startDay" id="tscl-startDay" value="2017-03-20"/>
-                            </div>
-                            <label class="col-sm-1 control-label car-label-2" style="text-align: right; margin-top:5px">结束日期：</label>
-                            <div class="col-sm-2 car-div-2">
-                                <input type="date" class="form-control" name="endDay" id="tscl-endDay" value="2017-03-22"/>
-                            </div>
-                            <label class="col-sm-1 control-label car-label-1" style="text-align: right; margin-top:5px">来源：</label>
-                            <div class="col-sm-2 car-div-1">
-                                <select  class="form-control" name="parkName" id="tscl-parkName">
-                                    <option value="">请选择</option>
-                                    <option value="全部" selected>全部</option>
-                                    <option value="理想城">理想城</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-1 car-div-3">
-                                <button type="button" class="btn btn-primary" id="tscl-btn">查询</button>
-                            </div>
+                    <div id="twoLabel" class="col-md-2" style="height: 100%;">
+                        <div class="row" >
+                            <h3 style="margin-top: 50%; text-align: center;">总车辆</h3>
+                            <h2 id="num1"></h2>
                         </div>
-                        <!--</div>-->
-                    </form>
+                        <div class="row">
+                            <h3 style="margin-top: 50%;text-align: center;">总停车量</h3>
+                            <h2 id="num2"></h2>
+                        </div>
+                    </div>
+
+                    <div id="chart01" class="col-md-10" style="height: 100%;">
+                        <div class="page-header">
+                            <h4 class="text-center text-primary"><strong>每一天的停车量</strong></h4>
+                        </div>
+                        <form id="tytj-form-01">
+                            <!--<div class="panel panel-default">-->
+                            <div class="form-group" style="margin-bottom:0px;">
+                                <div class="row">
+                                    <label class="col-sm-2 control-label car-label-2" style="width:75px;text-align: right; margin-top:5px">日期：</label>
+                                    <div class="col-sm-4 car-div-2">
+                                        <select  class="form-control" name="recentDays" id="tytj-recentDays-01">
+                                            <option value="">手动选择</option>
+                                            <option value="最近1天">最近1天</option>
+                                            <option value="最近3天">最近3天</option>
+                                            <option value="最近7天">最近7天</option>
+                                            <option value="最近10天">最近10天</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-2 control-label car-label-2" style="width:75px;text-align: right; margin-top:5px">来源：</label>
+                                    <div class="col-sm-2 car-div-2" style="width:160px;">
+                                        <select  class="form-control" name="parkName" id="tytj-parkName-01">
+                                            <option value="">请选择</option>
+                                            <option value="全部" selected>全部</option>
+                                            <option value="理想城">理想城</option>
+                                        </select>
+                                    </div>
+                                <!--</div>-->
+                                <!--<div class="row" style="height: 5px;"></div>-->
+                                <!--<div class="row">-->
+                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">开始日期：</label>
+                                    <div class="col-sm-4 car-div-2 ">
+                                        <input type="date" class="form-control" name="startDay" id="tytj-startDay-01" value="2017-04-12"/>
+                                    </div>
+                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">结束日期：</label>
+                                    <div class="col-sm-4 car-div-2">
+                                        <input type="date" class="form-control" name="endDay" id="tytj-endDay-01" value="2017-04-22"/>
+                                    </div>
+                                    <div class="col-sm-2 car-div-3">
+                                        <button type="button" class="btn btn-primary" id="tytj-btn-01">查询</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="tytj-chart-01" style="width: 800px;height: 500px;align:center;left: 15%" >
+                        </div>
+                    </div>
                 </div>
+                <!--分割行-->
+                <div class="row" style="height: 10px;"></div>
+                <div class="row">
+                    <div id="chart02" class="col-md-6" style="height: 100%;">
+                        <div class="page-header">
+                            <h4 class="text-center text-primary"><strong>各省份车辆数</strong></h4>
+                        </div>
+                        <div id="tytj-chart-02" style="width: 600px;height: 500px;align:center" >
+                        </div>
+                    </div>
+                    <div></div>
+                    <div id="chart03" class="col-md-6" style="height: 100%;align:center">
+                        <div class="page-header">
+                            <h4 class="text-center text-primary"><strong>每栋楼车辆数</strong></h4>
+                        </div>
+                        <div id="tytj-chart-03" style="width: 600px;height: 500px;align:center" >
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane fade" id="tscl">
                 <div class="row" style="height: 800px;">
                     <div id="chart" class="col-md-4" style="height: 100%;">
                         <div class="page-header">
@@ -88,15 +130,15 @@
 
                     <div id="tscl-detailInfo" class="col-md-8" style="height: 100%;">
                         <div class="page-header">
-                            <h4 class="text-center text-primary"><strong>特殊车辆出入库详细信息</strong></h4>
+                            <h4 class="text-center text-primary"><strong>所有车辆出入库详细信息</strong></h4>
                         </div>
-                        <table id="tscl-table" class="table table-striped table-bordered table-hover table-condensed">
+                        <table id="tscl-table" class="table table-bordered table-hover table-condensed">
                         </table>
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="tssd">
-                <div class="row">
+                <div class="row" id="tssd-select">
                     <div class="page-header">
                         <h4 class="text-center text-primary"><strong>特定时段车辆出入库详细信息</strong></h4>
                     </div>
@@ -154,10 +196,10 @@
                         <!--</div>-->
                     </form>
                 </div>
-                <div class="row" style="height: 800px;">
+                <div class="row" style="height: 600px;">
                     <div class="col-md-1"></div>
                     <div id="tssd-detailInfo" class="col-md-10" style="height: 100%;">
-                        <table id="tssd-table" class="table table-striped table-bordered table-hover table-condensed">
+                        <table id="tssd-table" class="table table-bordered table-hover table-condensed">
 
                         </table>
                     </div>
@@ -209,129 +251,110 @@
                 <div class="row" style="height: 800px;">
                     <!--<div class="col-md-1"></div>-->
                     <!--<div id="tspd-detailInfo" class="col-md-10" style="height: 100%;">-->
-                    <div id="tspd-chart" class="col-md-5" style="width: 500px;height: 500px;align:center" >
+                    <div class="col-md-5" style="height: 600px;background-color: rgb(37,39,62);border: 1px solid rgb(25, 26, 44)">
+                        <div id="tspd-chart" style="width: 500px;height: 500px;align:center;" >
 
+                        </div>
                     </div>
+
                     <!--</div>-->
-                    <div class="col-md-7" style="width: 900px;">
-                        <table id="tspd-table" class="table table-striped table-bordered table-hover table-condensed">
+                    <div class="col-md-7" style="width: 800px;height:600px;background-color: rgb(37,39,62);border: 1px solid rgb(25, 26, 44);">
+                        <table id="tspd-table" class="table table-bordered table-hover table-condensed" >
                         </table>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="tytj">
-                <div class="row">
-                    <div id="chart01" class="col-md-6" style="height: 100%;">
-                        <div class="page-header">
-                            <h4 class="text-center text-primary"><strong>总停车量</strong></h4>
-                        </div>
-                        <form id="tytj-form-01">
-                            <!--<div class="panel panel-default">-->
-                            <div class="form-group" style="margin-bottom:0px;">
-                                <div class="row">
-                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">日期：</label>
-                                    <div class="col-sm-4 car-div-2">
-                                        <select  class="form-control" name="recentDays" id="tytj-recentDays-01">
-                                            <option value="">手动选择</option>
-                                            <option value="最近1天">最近1天</option>
-                                            <option value="最近3天">最近3天</option>
-                                            <option value="最近7天">最近7天</option>
-                                            <option value="最近10天">最近10天</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">来源：</label>
-                                    <div class="col-sm-2 car-div-2">
-                                        <select  class="form-control" name="parkName" id="tytj-parkName-01">
-                                            <option value="">请选择</option>
-                                            <option value="全部" selected>全部</option>
-                                            <option value="理想城">理想城</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row" style="height: 5px;"></div>
-                                <div class="row">
-                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">开始日期：</label>
-                                    <div class="col-sm-4 car-div-2 ">
-                                        <input type="date" class="form-control" name="startDay" id="tytj-startDay-01" value="2017-04-12"/>
-                                    </div>
-                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">结束日期：</label>
-                                    <div class="col-sm-4 car-div-2">
-                                        <input type="date" class="form-control" name="endDay" id="tytj-endDay-01" value="2017-04-22"/>
-                                    </div>
-                                    <div class="col-sm-2 car-div-3">
-                                        <button type="button" class="btn btn-primary" id="tytj-btn-01">查询</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <div id="tytj-chart-01" style="width: 600px;height: 500px;align:center" >
-                        </div>
-                    </div>
-                    <div id="chart02" class="col-md-6" style="height: 100%;">
-                        <div class="page-header">
-                            <h4 class="text-center text-primary"><strong>每辆车停车频次</strong></h4>
-                        </div>
-                        <form id="tytj-form-02">
-                            <!--<div class="panel panel-default">-->
-                            <div class="form-group" style="margin-bottom:0px;">
-                                <div class="row">
-                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">日期：</label>
-                                    <div class="col-sm-4 car-div-2">
-                                        <select  class="form-control" name="recentDays" id="tytj-recentDays-02">
-                                            <option value="">手动选择</option>
-                                            <option value="最近1天">最近1天</option>
-                                            <option value="最近3天">最近3天</option>
-                                            <option value="最近7天">最近7天</option>
-                                            <option value="最近10天">最近10天</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">来源：</label>
-                                    <div class="col-sm-2 car-div-2">
-                                        <select  class="form-control" name="parkName" id="tytj-parkName-02">
-                                            <option value="">请选择</option>
-                                            <option value="全部" selected>全部</option>
-                                            <option value="理想城">理想城</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row" style="height: 5px;"></div>
-                                <div class="row">
-                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">开始日期：</label>
-                                    <div class="col-sm-4 car-div-2">
-                                        <input type="date" class="form-control" name="startDay" id="tytj-startDay-02" value="2017-03-20"/>
-                                    </div>
-                                    <label class="col-sm-2 control-label car-label-2" style="text-align: right; margin-top:5px">结束日期：</label>
-                                    <div class="col-sm-4 car-div-2">
-                                        <input type="date" class="form-control" name="endDay" id="tytj-endDay-02" value="2017-04-22"/>
-                                    </div>
-                                    <div class="col-sm-2 car-div-3">
-                                        <button type="button" class="btn btn-primary" id="tytj-btn-02">查询</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <div id="tytj-chart-02" style="width: 600px;height: 500px;align:center" >
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+
+
         <!-- Modal -->
-        <div class="modal fade" id="carModal" style="width:800px;" tabindex="-1" role="dialog" aria-labelledby="carModalLabel">
+        <div class="modal fade" id="preDayCarModal" style="width:800px;" tabindex="-1" role="dialog" aria-labelledby="preDayCarModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="width:700px;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="preDayCarModalLabel"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="preDayCar-modal-table" class="table table-bordered table-hover table-condensed">
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="preBlockCarModal" style="width:800px;" tabindex="-1" role="dialog" aria-labelledby="preBlockCarModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="width:700px;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="preBlockCarModalLabel"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="preBlockCar-modal-table" class="table table-bordered table-hover table-condensed">
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="allCarModal" style="width:800px;" tabindex="-1" role="dialog" aria-labelledby="allCarModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="allCarModalLabel"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="allCar-modal-table" class="table table-bordered table-hover table-condensed">
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" id="setKeyCar-btn"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="tsCarModal" style="width:800px;" tabindex="-1" role="dialog" aria-labelledby="tsCarModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="width:700px;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="tsCarModalLabel"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="tsCar-modal-table" class="table table-bordered table-hover table-condensed">
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="preCarModal" style="width:800px;" tabindex="-1" role="dialog" aria-labelledby="preCarModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="carModalLabel"></h4>
+                        <h4 class="modal-title" id="preCarModalLabel"></h4>
                     </div>
                     <div class="modal-body">
-                        <table id="modal-table" class="table table-striped table-bordered table-hover table-condensed">
+                        <table id="preCar-modal-table" class="table table-bordered table-hover table-condensed">
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-                        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </div>
             </div>
@@ -346,15 +369,19 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="bootstrap-3.3.7/js/bootstrap-table.js"></script>
+<script type="text/javascript" src="bootstrap-3.3.7/js/tableExport.js"></script>
+<script type="text/javascript" src="bootstrap-3.3.7/js/bootstrap-table-export.js"></script>
+
 <!--国际化，表格汉化-->
 <script type="text/javascript" src="bootstrap-3.3.7/js/bootstrap-table-zh-CN.js"></script>
 
 <script type="text/javascript" src="js/echarts.js"></script>
 
 
+<script type="text/javascript" src="js/car_system.js"></script>
 <script type="text/javascript" src="js/tscl.js"></script>
 <script type="text/javascript" src="js/tssd.js"></script>
 <script type="text/javascript" src="js/tspd.js"></script>
 <script type="text/javascript" src="js/tytj.js"></script>
-<script type="text/javascript" src="js/car_system.js"></script>
+
 </html>

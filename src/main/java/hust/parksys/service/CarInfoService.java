@@ -4,6 +4,7 @@ import java.util.List;
 
 import hust.parksys.dto.DtoCar;
 import hust.parksys.dto.DtoKeyCarPercent;
+import hust.parksys.dto.ParkTimeAndType;
 import hust.parksys.entity.CarInfo;
 import hust.parksys.entity.CommonMap;
 
@@ -24,4 +25,8 @@ public interface CarInfoService {
 	List<CommonMap> selectCarPerBlock();
 
 	List<DtoCar> selectBlockCarDetail(String dh);
+
+	String isKeyCar(String carNum);
+
+	List<DtoCar> selectDayCarDetail(String day);
 }

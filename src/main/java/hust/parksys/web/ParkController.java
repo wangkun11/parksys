@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ch.qos.logback.classic.Logger;
+
 /**
  * Created by lisa on 2016/8/30.
  */
@@ -116,11 +118,10 @@ public class ParkController {
 	public List<DtoCar> sepcialFreDetail(
 			@RequestParam(value = "startDay", defaultValue = "2017-04-15") String startDay,
 			@RequestParam(value = "endDay", defaultValue = "2017-04-22") String endDay,
-			@RequestParam(value = "fre", defaultValue = "20") String fre,
+			@RequestParam(value = "fre", defaultValue = "10") String fre,
 			@RequestParam(value = "parkName", defaultValue = "理想城停车场") String parkName) {
 		System.out.println("进入sepcialfredetail");
-		System.out
-				.println(startDay + " " + endDay + " " + fre + " " + parkName);
+		System.out.println(startDay + " " + endDay + " " + fre + " " + parkName);
 		List<DtoCar> list = parkInfoService.selectSepcialFreDetail(startDay,
 				endDay, fre, parkName);
 		System.out.println(list.size());
@@ -177,16 +178,32 @@ public class ParkController {
 	public String allparkCount() {
 		return "45535";
 	}
+	// 4.7 每天出入车辆的具体信息
+	@ResponseBody
+	@RequestMapping(value = "/daycardetail")
+	public List<DtoCar> daycardetail(
+			@RequestParam(value = "day", defaultValue = "2017-03-22") String day) {
+		return carInfoService.selectDayCarDetail(day);
+	}
 
 	// 5 通用接口：
-	// 1、查询某辆车的所有进出时间
+	// 5.1、查询某辆车的所有进出时间
 	@ResponseBody
 	@RequestMapping(value = "/parktimeandtype")
 	public List<ParkTimeAndType> selectParkTimeAndType(
 			@RequestParam(value = "carNum", defaultValue = "鄂A92D3D") String carNum,
 			@RequestParam(value = "parkName", defaultValue = "理想城停车场") String parkName) {
-		System.out.println("进入sepcialfrequencies");
+		System.out.println("进入parktimeandtype");
 		System.out.println(carNum + " " + parkName);
 		return parkInfoService.selectParkTimeAndType(carNum, parkName);
+	}
+	// 5.2、判断一辆车是否是重点车辆
+	@ResponseBody
+	@RequestMapping(value = "/iskeycar")
+	public String isKeyCar(
+			@RequestParam(value = "carNum", defaultValue = "鄂AEV407") String carNum) {		
+		String iskeycar=carInfoService.isKeyCar(carNum);
+		logger.info(carNum+" iskeycar:"+iskeycar);
+		return iskeycar;
 	}
 }

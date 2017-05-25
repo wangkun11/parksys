@@ -49,4 +49,14 @@
     <include refid="Base_Column_List" />
     from car_info where room_num like #{0}
   </select>
+  <select id="selectRemark" resultType="java.lang.String" parameterType="java.lang.String">
+    select remark
+    from car_info where car_num = #{0} 
+  </select>
+  <select id="selectDayCars" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select a.room_num, a.tel, a.remark, a.car_num
+    from car_info as a,park_info as b 
+    where a.car_num=b.car_num and 
+    b.time_in <![CDATA[ >= ]]> #{0} and b.time_in <![CDATA[ <= ]]> #{1}
+  </select>
 </mapper>
