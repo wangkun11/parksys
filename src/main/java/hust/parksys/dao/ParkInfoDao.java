@@ -1,8 +1,8 @@
 package hust.parksys.dao;
 
-import hust.parksys.dto.CarParkInfo;
 import hust.parksys.entity.CommonMap;
 import hust.parksys.entity.CountByDays;
+import hust.parksys.entity.ParkInfo;
 import hust.parksys.entity.ParkTime;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface ParkInfoDao {
 	List<CommonMap> selectCountBycar1(String timeStart, String timeEnd,
 			String parkName);
 	// 车辆的停车信息和车主自身信息
-	List<CarParkInfo> selectCarParkInfo(String timeStart, String timeEnd,
+	List<ParkInfo> selectParkInfoByTime(String timeStart, String timeEnd,
 			String parkName);
 	
 	//某一辆车的所有出入记录

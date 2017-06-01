@@ -68,18 +68,17 @@ $(function () {
         var parkName=$("#tytj-parkName-01 option:selected").attr('value');
 
         if(startDay==""){
-            alert("查询开始日期不能为空！");
+            alert("日期错误！请重新选择！");
         }else if(endDay==""){
-            alert("查询结束日期不能为空！");
+            alert("日期错误！请重新选择！");
         }else if(startDay>endDay){
-            alert("查询开始日期不能大于结束日期！");
+            alert("查询开始日期不能大于结束日期！请重新选择！");
         }else if(parkName==""){
-            alert("查询来源不能为空！");
+            alert("查询来源不能为空！请重新选择！");
         }else{
             $.ajax({
-                //cache:false,
+                cache:false,
                 type:'post',
-                //url:'http://115.156.208.192:8080/parksys/specialtime',
                 //url:'tytj_data_01.json',
                 url:'/parksys/prakcount',
                 dataType:'json',

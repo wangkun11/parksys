@@ -2,18 +2,19 @@ package hust.parksys.service.impl;
 
 import hust.parksys.dao.CarInfoDao;
 import hust.parksys.dao.ParkInfoDao;
-import hust.parksys.dto.CarParkInfo;
 import hust.parksys.dto.DtoCar;
-import hust.parksys.dto.KeyCarParkInfo;
+import hust.parksys.dto.DtoPark;
 import hust.parksys.dto.ParkFrequency;
 import hust.parksys.dto.ParkTimeAndType;
 import hust.parksys.entity.CarInfo;
 import hust.parksys.entity.CommonMap;
 import hust.parksys.entity.CountByDays;
+import hust.parksys.entity.ParkInfo;
 import hust.parksys.entity.ParkTime;
 import hust.parksys.service.ParkInfoService;
 import hust.parksys.util.MyUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,12 +30,30 @@ public class ParkInfoServiceImpl implements ParkInfoService{
 	@Autowired
 	private CarInfoDao carInfoDao;
 	
-	public List<CarParkInfo> selectByTime(String startDay, String endDay,
+	public List<DtoPark> selectByTime(String startDay, String endDay,
 			String timeSlot, String parkName) {
 		//ymd=2017-03-20 time=12:00-14:00
 		String timeStart=startDay+" "+timeSlot.split("-")[0]+":00";
 		String timeEnd=endDay+" "+timeSlot.split("-")[1]+":00";
-		return parkInfoDao.selectCarParkInfo(timeStart,timeEnd,parkName);
+		List<ParkInfo> list=parkInfoDao.selectParkInfoByTime(timeStart,timeEnd,parkName);
+		List<DtoPark> list2=new ArrayList<DtoPark>();
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
+		for (ParkInfo parkInfo : list) {
+			DtoPark dtoPark=new DtoPark();
+			dtoPark.setCarNum(parkInfo.getCarNum());
+			dtoPark.setTime(df.format(parkInfo.getTimeIn()));
+			dtoPark.setType("入口");
+			dtoPark.setParkName(parkInfo.getParkName());
+			DtoPark dtoPark1=new DtoPark();
+			dtoPark1.setCarNum(parkInfo.getCarNum());
+			dtoPark1.setTime(df.format(parkInfo.getTimeOut()));
+			dtoPark1.setType("出口");
+			dtoPark1.setParkName(parkInfo.getParkName());
+
+			list2.add(dtoPark);
+			list2.add(dtoPark1);
+		}
+		return list2;
 	}
     public List<ParkFrequency> selectFreByTime(String startDay,String endDay,String parkName){
     	startDay+=" 00:00:00";
@@ -91,43 +110,6 @@ public class ParkInfoServiceImpl implements ParkInfoService{
     	return parkInfoDao.selectCountBycar1(startDay, endDay, parkName);
 	}
 
-	public List<KeyCarParkInfo> selectKeyCars(String startDay, String endDay,
-			String parkName) {
-		startDay+=" 00:00:00";
-    	endDay+=" 24:00:00";
-    	//特殊车辆集合
-    	Set<String> set=new HashSet<String>();
-    	set.add("鄂AZF408");
-    	set.add("鄂A52PY8");
-    	set.add("鄂A18306");
-    	set.add("鄂A90DY7");
-    	set.add("鄂AK7L13");
-    	List<CarParkInfo> list1=parkInfoDao.selectCarParkInfo(startDay, endDay, parkName);
-    	List<KeyCarParkInfo> list2=new ArrayList<KeyCarParkInfo>();
-    	for (CarParkInfo parkDetail : list1) {
-			if (set.contains(parkDetail.getCarNum())) {
-				KeyCarParkInfo keyCarParkInfo=new KeyCarParkInfo();
-				keyCarParkInfo.setCarNum(parkDetail.getCarNum());
-				keyCarParkInfo.setRoomNum(parkDetail.getRoomNum());
-				keyCarParkInfo.setTel(parkDetail.getTel());
-				keyCarParkInfo.setTime(parkDetail.getTimeIn());
-				keyCarParkInfo.setType("入口");
-				keyCarParkInfo.setParkName(parkDetail.getParkName());
-				
-				KeyCarParkInfo keyCarParkInfo1=new KeyCarParkInfo();
-				keyCarParkInfo1.setCarNum(parkDetail.getCarNum());
-				keyCarParkInfo1.setRoomNum(parkDetail.getRoomNum());
-				keyCarParkInfo1.setTel(parkDetail.getTel());
-				keyCarParkInfo1.setTime(parkDetail.getTimeOut());
-				keyCarParkInfo1.setType("出口");
-				keyCarParkInfo1.setParkName(parkDetail.getParkName());
-				
-				list2.add(keyCarParkInfo);
-				list2.add(keyCarParkInfo1);
-			}
-		}
-		return list2;
-	}
 	public List<DtoCar> selectSepcialFreDetail(String startDay,
 			String endDay, String fre, String parkName) {
 		startDay+=" 00:00:00";
@@ -154,12 +136,13 @@ public class ParkInfoServiceImpl implements ParkInfoService{
 			String parkName) {
 		List<ParkTimeAndType> list =new ArrayList<ParkTimeAndType>();
 		List<ParkTime> list2=parkInfoDao.selectParkTimeByCar(carNum);
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
 		for (ParkTime parkTime : list2) {
 			ParkTimeAndType parkTimeAndType=new ParkTimeAndType();
-			parkTimeAndType.setTime(parkTime.getTimeIn());
+			parkTimeAndType.setTime(df.format(parkTime.getTimeIn()));
 			parkTimeAndType.setType("入口");
 			ParkTimeAndType parkTimeAndType1=new ParkTimeAndType();
-			parkTimeAndType1.setTime(parkTime.getTimeOut());
+			parkTimeAndType1.setTime(df.format(parkTime.getTimeOut()));
 			parkTimeAndType1.setType("出口");
 			list.add(parkTimeAndType);
 			list.add(parkTimeAndType1);

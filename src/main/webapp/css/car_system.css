@@ -41,9 +41,9 @@ label{
     color: rgb(183,183,195);
 }
 
-#chart01,#chart02,#chart03,#chart,#tscl-detailInfo,#tssd-detailInfo{
+#chart01,#chart02,#chart03,#rt-chart-01,#rt-chart-02,#rt-table-info-01,#rt-table-info-02,#chart,#tscl-detailInfo,#tssd-detailInfo{
     background-color: rgb(37,39,62);
-    border: 5px solid rgb(25, 26, 44);
+    border: 3px solid rgb(25, 26, 44);
 }
 /*#tssd-select{*/
     /*background-color: rgb(37,39,62);*/
@@ -51,9 +51,9 @@ label{
 /*}*/
 
 #twoLabel .row{
-    height: 310px;
+    height: 304px;
     background-color: rgb(37,39,62);
-    border: 5px solid rgb(25, 26, 44);
+    border: 3px solid rgb(25, 26, 44);
     color: rgb(183,183,195);
 
 }
@@ -76,21 +76,24 @@ div.car-div-1{
     width: 140px;
 }
 div.car-div-2{
-    width: 190px;
+    width: 170px;
 }
 div.car-div-3{
     width: 90px;
 }
-
+label.car-label-1,label.car-label-2,div.car-div-1,div.car-div-2,div.car-div-3{
+    padding-left: 0px;
+    padding-right: 15px;
+}
 .table{
-    color:#fc7b05 !important;
+    color:#ffffff !important;
 }
 .bootstrap-table{
     color:rgb(181, 184,199 );
 }
 
 .modal-body > .bootstrap-table {
-    color: #0f0f0f !important;
+    color: rgb(181, 184,199 ) !important;
 }
 
 .modal-body >table{
@@ -100,8 +103,28 @@ div.car-div-3{
 .modal{
     margin: auto;
 }
+.modal-content{
+    background-color: rgb(37,39,62);
+}
+.modal-title{
+    color: #ffffff;
+}
 
+.close{
+    color: #ffffff;
+}
+
+.fixed-table-body thead th .th-inner {
+    color: #a7aec1;
+    background-color: #1e2134;
+}
 .btn-primary {
     color: #fff;
     background-color: #5182e4;
+}
+
+
+.form-control[disabled]{
+    background-color: #5c626e;
+    /*#465b82;*/
 }

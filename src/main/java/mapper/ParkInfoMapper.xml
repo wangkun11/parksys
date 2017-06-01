@@ -19,10 +19,10 @@
     WHERE time_in <![CDATA[ >= ]]> #{0} and time_in <![CDATA[ <= ]]> #{1}) as b 
     GROUP BY value1 limit 0,20;
   </select>
-  <select id="selectCarParkInfo" resultType="hust.parksys.dto.CarParkInfo" parameterType="java.lang.String" >
-    SELECT a.car_num carNum,a.room_num roomNum,a.tel tel,b.time_in timeIn,b.time_out timeOut,b.park_name parkName
-    FROM car_info a ,park_info b 
-    WHERE a.car_num=b.car_num and time_in <![CDATA[ >= ]]> #{0} and time_in <![CDATA[ <= ]]> #{1}
+  <select id="selectParkInfoByTime" resultType="hust.parksys.entity.ParkInfo" parameterType="java.lang.String" >
+    SELECT car_num carNum,time_in timeIn,time_out timeOut,park_name parkName
+    FROM park_info  
+    WHERE time_in <![CDATA[ >= ]]> #{0} and time_in <![CDATA[ <= ]]> #{1}
   </select>
   <select id="selectParkTimeByCar" resultType="hust.parksys.entity.ParkTime" parameterType="java.lang.String" >
     SELECT time_in timeIn,time_out timeOut from park_info

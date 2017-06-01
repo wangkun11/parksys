@@ -1,8 +1,7 @@
 package hust.parksys.service;
 
-import hust.parksys.dto.CarParkInfo;
 import hust.parksys.dto.DtoCar;
-import hust.parksys.dto.KeyCarParkInfo;
+import hust.parksys.dto.DtoPark;
 import hust.parksys.dto.ParkFrequency;
 import hust.parksys.dto.ParkTimeAndType;
 import hust.parksys.entity.CommonMap;
@@ -11,12 +10,9 @@ import hust.parksys.entity.CountByDays;
 import java.util.List;
 
 public interface ParkInfoService {
-	// 标签1
-	List<KeyCarParkInfo> selectKeyCars(String startDay, String endDay,
-			String parkName);
 
 	// 标签2
-	List<CarParkInfo> selectByTime(String startDay, String endDay, String timeSlot, String parkName);
+	List<DtoPark> selectByTime(String startDay, String endDay, String timeSlot, String parkName);
 
 	// 标签3
 	List<ParkFrequency> selectFreByTime(String startDay, String endDay,

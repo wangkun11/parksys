@@ -108,4 +108,9 @@ public class MyUtil {
 		return list1;
 	}
 
+	public static int getRandom() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

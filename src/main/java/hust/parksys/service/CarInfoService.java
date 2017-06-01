@@ -29,4 +29,8 @@ public interface CarInfoService {
 	String isKeyCar(String carNum);
 
 	List<DtoCar> selectDayCarDetail(String day);
+
+	List<String> selectAllCarNum();
+
+	List<DtoCar> selectProvenceCarDetail(String provence);
 }

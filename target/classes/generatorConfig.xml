@@ -5,23 +5,20 @@
 	<context id="context1">
 
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/park" userId="root"
+			connectionURL="jdbc:mysql://localhost:3306/park_virtual" userId="root"
 			password="123456" />
 		<javaModelGenerator targetPackage="hust.parksys.entity"
 			targetProject="parksys" />
 		<sqlMapGenerator targetPackage="mapper" targetProject="parksys" />
-		<javaClientGenerator targetPackage="hust.parksys.entity"
+		<javaClientGenerator targetPackage="hust.parksys.dao"
 			targetProject="parksys" type="XMLMAPPER" />
 
 
-		<table tableName="park_info" domainObjectName="parkInfo"
+		<table tableName="park_info_current" domainObjectName="ParkInfoCurrent"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
-		<table tableName="car_info" domainObjectName="carInfo"
-			enableCountByExample="false" enableUpdateByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false"></table>
+		
 		
 
 

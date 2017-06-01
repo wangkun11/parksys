@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017/5/18.
  */
-//tytj
+//tytj modal1
 function render_preDayCarModal(param){
     //console.log(param.name);
     $("#preDayCarModal").modal('toggle');
@@ -15,8 +15,9 @@ function render_preDayCarModal(param){
         data:{'day':param.name},
         success:function(data){
             $('#preDayCar-modal-table').bootstrapTable({
-                //cache:false,
+                cache:false,
                 //data:data,
+                classes:"table table-bordered table-condensed",
                 striped: false, //是否显示行间隔色
                 pagination:true,//是否分页
                 //dataField: "res",
@@ -33,6 +34,7 @@ function render_preDayCarModal(param){
                 columns: [{
                     //field: 'Number',//可不加
                     title: '序号',//标题  可不加
+                    align: 'center',
                     formatter: function (value, row, index) {
                         return index+1;
                     }
@@ -79,6 +81,10 @@ function render_preDayCarModal(param){
             });
             $('#preDayCar-modal-table').bootstrapTable('load',data);
         }
+    });
+
+    $("button[data-dismiss='modal']").click(function(){
+        $('#preDayCar-modal-table').bootstrapTable('destroy');
     });
 }
 
@@ -221,6 +227,93 @@ function tytjChart01(chart,data1,data2){
     chart.on('click', render_preDayCarModal);
 }
 
+
+//tytj modal2
+function render_preProvenceCarModal(param){
+    //console.log(param.name);
+    $("#preProvenceCarModal").modal('toggle');
+    $("#preProvenceCarModal").find('.modal-title').text(param.name);
+    $.ajax({
+        cache:false,
+        type:'post',
+        //url:'preProvenceCarModal_data.json',
+        url:'/parksys/provencecardetail',
+        dataType:'json',
+        data:{'provence':param.name},
+        success:function(data){
+            $('#preProvenceCar-modal-table').bootstrapTable({
+                cache:false,
+                //data:data,
+                classes:"table table-bordered table-condensed",
+                striped: false, //是否显示行间隔色
+                pagination:true,//是否分页
+                //dataField: "res",
+                pageNumber: 1, //初始化加载第一页，默认第一页
+                queryParamsType:'limit',//查询参数组织方式
+                sidePagination:'client',//默认是客户端分页
+                //客户端分页是一次性将所有的数据加载到浏览器的缓存中，因此无需服务端进行计算总页数。
+                pageSize:10,//单页记录数
+                pageList:[10,15,20],//分页步进值
+                //showRefresh:true,//刷新按钮
+                showColumns:true,
+                clickToSelect: true,//是否启用点击选中行
+                buttonsAlign:'right',//按钮对齐方式
+                columns: [{
+                    //field: 'Number',//可不加
+                    title: '序号',//标题  可不加
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return index+1;
+                    }
+                },{
+                    field:'carNum',
+                    title:'车牌号',
+                    align: 'center'
+                },{
+                    field:'dh',
+                    title:'栋号',
+                    align: 'center',
+                    sortable: true,
+                    sortOrder: 'desc',
+                },{
+                    field:'dyh',
+                    title:'单元号',
+                    align: 'center',
+                    sortable: true,
+                    sortOrder: 'desc',
+                },{
+                    field:'fjh',
+                    title:'房间号',
+                    align: 'center',
+                    sortable: true,
+                    sortOrder: 'desc',
+                },{
+                    field: 'tel',
+                    title: '联系电话',
+                    align: 'center',
+                },{
+                    field: 'iskeyCar',
+                    title: '重点车辆',
+                    align: 'center'
+                },{
+                    field: 'block',
+                    title: '小区',
+                    align: 'center'
+                }],
+                locale:'zh-CN',//中文支持,
+                //responseHandler:function(data){
+                //    //在ajax获取到数据，渲染表格之前，修改数据源
+                //    return data.response.rows;
+                //}
+            });
+            $('#preProvenceCar-modal-table').bootstrapTable('load',data);
+        }
+    });
+    $("button[data-dismiss='modal']").click(function(){
+        $('#preProvenceCar-modal-table').bootstrapTable('destroy');
+    });
+}
+
 function tytjChart02(chart,data1,data2){
     var data=[];
     var sum=0;
@@ -241,7 +334,7 @@ function tytjChart02(chart,data1,data2){
         animationEasingUpdate: 'cubicInOut',
         title: [{
             text: '本省车辆',
-            left: '49%',
+            left: '40%',
             top: '40%',
             textAlign: 'center',
             textBaseline: 'middle',
@@ -252,7 +345,7 @@ function tytjChart02(chart,data1,data2){
             }
         },{
             text: HBCarPercent,
-            left: '49%',
+            left: '40%',
             top: '50%',
             textAlign: 'center',
             textBaseline: 'middle',
@@ -287,9 +380,10 @@ function tytjChart02(chart,data1,data2){
         },
         series: [{
             type: 'pie',
-            selectedMode: 'single',
+            name:'各省份车辆数',
+            //selectedMode: 'single',
             radius: ['60%', '80%'],
-            center:['50%','50%'],
+            center:['40%','50%'],
             color: ['#FFBBFF','#5482E4','#F88D47','#86D560', '#68228B','#CD8500', '#00E5EE','#7CCD7C','#51b3F0','#9CCC61','#6964de','#41B271','#FF999A','#AF89D6', '#59ADF3','#FF6A6A','#CAFF70', '#FFCC67','#436EEE','#00868B','#5F9EA0','#FF999A','#AF89D6', '#59ADF3'],
             label: {
                 normal: {
@@ -310,8 +404,8 @@ function tytjChart02(chart,data1,data2){
             data:data,
         }]
     };
-
     chart.setOption(option);
+    chart.on('click', render_preProvenceCarModal);
 }
 
 function render_preBlockCarModal(param){
@@ -327,8 +421,9 @@ function render_preBlockCarModal(param){
         data:{'dh':param.name},
         success:function(data){
             $('#preBlockCar-modal-table').bootstrapTable({
-                //cache:false,
+                cache:false,
                 //data:data,
+                classes:"table table-bordered table-condensed",
                 striped: false, //是否显示行间隔色
                 pagination:true,//是否分页
                 //dataField: "res",
@@ -345,6 +440,7 @@ function render_preBlockCarModal(param){
                 columns: [{
                     //field: 'Number',//可不加
                     title: '序号',//标题  可不加
+                    align: 'center',
                     formatter: function (value, row, index) {
                         return index+1;
                     }
@@ -391,6 +487,9 @@ function render_preBlockCarModal(param){
             });
             $('#preBlockCar-modal-table').bootstrapTable('load',data);
         }
+    });
+    $("button[data-dismiss='modal']").click(function(){
+        $('#preBlockCar-modal-table').bootstrapTable('destroy');
     });
 }
 
@@ -532,7 +631,7 @@ function tytjChart03(chart,data1,data2){
 
 //tscl
 function loadTsclCar(param){
-    console.log(param.dataIndex);
+    //console.log(param.dataIndex);
     if(param.dataIndex==0){
         $("#tsCarModal").modal('toggle');
         $("#tsCarModal").find('.modal-title').text('重点车辆');
@@ -545,8 +644,9 @@ function loadTsclCar(param){
             //data:{"carNum":carNum,"parkName":parkName},
             success:function(data){
                 $('#tsCar-modal-table').bootstrapTable({
-                    //cache:false,
+                    cache:false,
                     //data:data,
+                    classes:"table table-bordered table-condensed",
                     striped: false, //是否显示行间隔色
                     pagination:true,//是否分页
                     //dataField: "res",
@@ -563,6 +663,7 @@ function loadTsclCar(param){
                     columns: [{
                         //field: 'Number',//可不加
                         title: '序号',//标题  可不加
+                        align: 'center',
                         formatter: function (value, row, index) {
                             return index+1;
                         }
@@ -612,11 +713,14 @@ function loadTsclCar(param){
             }
         });
     }
+    $("button[data-dismiss='modal']").click(function(){
+        $('#tsCar-modal-table').bootstrapTable('destroy');
+    });
 }
 
 function pieChart(piechart,data1,data2){
     option = {
-        color:['rgb(194, 53, 49)','rgb(170, 170, 170)'],
+        color:['#f38001','#5482e2'],
         tooltip: {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -636,9 +740,11 @@ function pieChart(piechart,data1,data2){
             ],
         },
         series: [
+
             {
                 name:'重点车辆比例',
                 type: 'pie',
+                //selectedMode: 'single',
                 radius: ['45%', '55%'],
                 center:['50%','60%'],
                 label: {
@@ -697,6 +803,8 @@ function loadTspdCar(param) {
     //console.log(param.type);
     //console.log(param.name.split('≥'));
     //console.log(fre);
+
+    $('#tspd-table').bootstrapTable('destroy');
     $.ajax({
         type:'post',
 
@@ -707,6 +815,7 @@ function loadTspdCar(param) {
         success:function(data){
             //console.log(data);
             $('#tspd-table').bootstrapTable({
+                classes:"table table-bordered table-condensed",
                 cache:false,
                 //data:data,
                 striped: false, //是否显示行间隔色
@@ -725,6 +834,7 @@ function loadTspdCar(param) {
                 columns: [{
                     //field: 'Number',//可不加
                     title: '序号',//标题  可不加
+                    align: 'center',
                     formatter: function (value, row, index) {
                         return index+1;
                     }
@@ -736,32 +846,40 @@ function loadTspdCar(param) {
                         var a = '<a class="tspd" href="#carModal" data-toggle="modal" onclick="loadModal(this,'+"tspd"+')">'+value+'</a>';
                         return a;
                     }
-                }, {
-                    field: 'roomNum',
-                    title: '房屋号',
-                    align: 'center'
-                }, {
+                },{
+                    field:'dh',
+                    title:'栋号',
+                    align: 'center',
+                    sortable: true,
+                    sortOrder: 'desc',
+                    formatter:function(value,row,index){
+                        var a = '<a class="tspd"  href="#CarModal" data-toggle="modal" onclick="render_preBlockCarModal({name:'+value+'})">'+value+'</a>';
+                        return a;
+                    }
+                },{
+                    field:'dyh',
+                    title:'单元号',
+                    align: 'center',
+                    sortable: true,
+                    sortOrder: 'desc',
+                },{
+                    field:'fjh',
+                    title:'房间号',
+                    align: 'center',
+                    sortable: true,
+                    sortOrder: 'desc',
+                },{
                     field: 'tel',
                     title: '联系电话',
+                    align: 'center',
+                },{
+                    field: 'iskeyCar',
+                    title: '重点车辆',
                     align: 'center'
                 },{
-                    field: 'timeIn',
-                    title: '入场时间',
-                    align: 'center',
-                    sortable: true,
-                    sortOrder: 'desc',
-                },{
-                    field: 'timeOut',
-                    title: '出场时间',
-                    align: 'center',
-                    sortable: true,
-                    sortOrder: 'desc',
-                },{
-                    field: 'parkName',
-                    title: '停车场名称',
-                    align: 'center',
-                    sortable: true,
-                    sortOrder: 'desc',
+                    field: 'block',
+                    title: '小区',
+                    align: 'center'
                 }],
                 locale:'zh-CN',//中文支持,
                 //responseHandler:function(data){
@@ -803,10 +921,11 @@ function barChart(chart,data1,data2){
         },
         grid:{
             top:'25%',
-            right:'20%'
+            right:'25%'
         },
         legend: {
             top:70,
+            left:'20%',
             data:[
                 {name:'车辆数量',
                     textStyle:{
@@ -818,7 +937,7 @@ function barChart(chart,data1,data2){
         toolbox: {
             show : true,
             top:70,
-            right:50,
+            right:'20%',
             feature : {
                 mark : {show: true},
                 dataView : {show: true, readOnly: false},
@@ -922,7 +1041,8 @@ function render_allCarModal(data){
         data:''||data,
         success:function(data){
             $('#allCar-modal-table').bootstrapTable({
-                //cache:false,
+                classes:"table table-bordered table-condensed",
+                cache:false,
                 //data:data,
                 striped: false, //是否显示行间隔色
                 pagination:true,//是否分页
@@ -940,6 +1060,7 @@ function render_allCarModal(data){
                 columns: [{
                     //field: 'Number',//可不加
                     title: '序号',//标题  可不加
+                    align: 'center',
                     formatter: function (value, row, index) {
                         return index+1;
                     }
@@ -972,7 +1093,6 @@ function render_allCarModal(data){
         dataType:'json',
         data:''||data,
         success:function(data){
-        	console.log(data);
             if(data==1){
                 $("#setKeyCar-btn").text("取消重点车辆");
                 $("#setKeyCar-btn").attr("value",1);
@@ -981,6 +1101,9 @@ function render_allCarModal(data){
                 $("#setKeyCar-btn").attr("value",0);
             }
         }
+    });
+    $("button[data-dismiss='modal']").click(function(){
+        $('#allCar-modal-table').bootstrapTable('destroy');
     });
 }
 
@@ -998,6 +1121,9 @@ function render_tscl(data){
         }
     });
 
+
+    $('#tscl-table').bootstrapTable('destroy');
+
     $.ajax({
         //cache:false,
         type:'post',
@@ -1008,6 +1134,7 @@ function render_tscl(data){
         //data:''||data,
         success:function(data){
             $('#tscl-table').bootstrapTable({
+                classes:"table table-bordered table-condensed",
                 cache:false,
                 //data:data,
                 striped: false, //是否显示行间隔色
@@ -1038,6 +1165,7 @@ function render_tscl(data){
                 columns: [{
                     //field: 'Number',//可不加
                     title: '序号',//标题  可不加
+                    align: 'center',
                     formatter: function (value, row, index) {
                         return index+1;
                     }
@@ -1142,7 +1270,8 @@ function render_preCarModal(data){
         data:''||data,
         success:function(data){
             $('#preCar-modal-table').bootstrapTable({
-                //cache:false,
+                classes:"table table-bordered table-condensed",
+                cache:false,
                 //data:data,
                 striped: false, //是否显示行间隔色
                 pagination:true,//是否分页
@@ -1160,6 +1289,7 @@ function render_preCarModal(data){
                 columns: [{
                     //field: 'Number',//可不加
                     title: '序号',//标题  可不加
+                    align: 'center',
                     formatter: function (value, row, index) {
                         return index+1;
                     }
@@ -1183,6 +1313,9 @@ function render_preCarModal(data){
             $('#preCar-modal-table').bootstrapTable('load',data);
         }
     });
+    $("button[data-dismiss='modal']").click(function(){
+        $('#preCar-modal-table').bootstrapTable('destroy');
+    });
 }
 
 
@@ -1201,6 +1334,10 @@ function loadModal(obj,param) {
             data={'carNum':carNum};
             render_allCarModal(data);
             break;
+        case 'realtime':
+            data={'carNum':carNum};
+            render_allCarModal(data);
+            break;
         case 'tssd':
             parkName=$("#tssd-parkName option:selected").attr('value')
             data={'carNum':carNum,'parkName':parkName};
@@ -1208,7 +1345,7 @@ function loadModal(obj,param) {
             break;
         case 'tspd':
             parkName=$("#tspd-parkName option:selected").attr('value')
-            ata={'carNum':carNum,'parkName':parkName};
+            data={'carNum':carNum,'parkName':parkName};
             render_preCarModal(data);
             break;
         default :
@@ -1305,10 +1442,351 @@ function render_tytj(data1,data2,data3){
     });
 
 }
+//realtime chart01
 
+//function realtimeChart01(chart,data1,data2){
+//    option = {
+//        //title: {
+//        //    text: '今日&昨日',
+//        //    left: '50%',
+//        //    textAlign: 'center'
+//        //},
+//        tooltip: {
+//            trigger: 'axis',
+//            axisPointer: {
+//                type: 'cross',
+//                crossStyle: {
+//                    color: '#999'
+//                }
+//            }
+//        },
+//        grid:{
+//            top:'20%',
+//            containLabel: true
+//        },
+//        toolbox: {
+//            top:30,
+//            right:'40%',
+//            feature: {
+//                magicType: {show: true, type: ['line', 'bar']},
+//                restore: {show: true},
+//                saveAsImage: {show: true}
+//            },
+//            color:'#999'
+//        },
+//        legend: {
+//            //top:'bottom',
+//            top:30,
+//            right: 20,
+//            orient: 'vertical',
+//            data: ['入口','出口'],
+//            textStyle: {
+//                color: '#999'
+//            }
+//        },
+//        xAxis: {
+//            type: 'category',
+//            name:'时刻',
+//            data: ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21',"22",'23',"24"],
+//            boundaryGap: false,
+//            splitLine: {
+//                show: false
+//            },
+//            axisTick: {
+//                show: true
+//            },
+//            axisLine: {
+//                lineStyle: {
+//                    color: '#999'
+//                }
+//            },
+//            axisLabel: {
+//                margin: 10,
+//                textStyle: {
+//                    fontSize: 14
+//                }
+//            }
+//        },
+//        yAxis: {
+//            type: 'value',
+//            name:'车辆数',
+//            splitLine: {
+//                show: false
+//            },
+//            axisTick: {
+//                show: true
+//            },
+//            axisLine: {
+//                lineStyle: {
+//                    color: '#999'
+//                }
+//            },
+//            axisLabel: {
+//                margin: 10,
+//                textStyle: {
+//                    fontSize: 14
+//                }
+//            }
+//        },
+//        series: [{
+//            name: '入口',
+//            type: 'line',
+//            smooth: true,
+//            showSymbol: false,
+//            symbol: 'circle',
+//            symbolSize: 6,
+//            data: ['1200', '1400', '1008', '1411', '1026', '1288', '1300', '800', '1100', '1000', '1118', '1322'],
+//            areaStyle: {
+//                normal: {
+//                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+//                        offset: 0,
+//                        color: 'rgba(199, 237, 250,0.5)'
+//                    }, {
+//                        offset: 1,
+//                        color: 'rgba(199, 237, 250,0.2)'
+//                    }], false)
+//                }
+//            },
+//            itemStyle: {
+//                normal: {
+//                    color: '#42b7fc'
+//                }
+//            },
+//            lineStyle: {
+//                normal: {
+//                    width: 3
+//                }
+//            }
+//        }, {
+//            name: '出口',
+//            type: 'line',
+//            smooth: true,
+//            showSymbol: false,
+//            symbol: 'circle',
+//            symbolSize: 6,
+//            data: ['1200', '1400', '808', '811', '626', '488', '1600', '1100', '500', '300', '1998', '822'],
+//            areaStyle: {
+//                normal: {
+//                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+//                        offset: 0,
+//                        color: 'rgba(216, 244, 247,1)'
+//                    }, {
+//                        offset: 1,
+//                        color: 'rgba(216, 244, 247,1)'
+//                    }], false)
+//                }
+//            },
+//            itemStyle: {
+//                normal: {
+//                    color: '#f4cc50'
+//                }
+//            },
+//            lineStyle: {
+//                normal: {
+//                    width: 3
+//                }
+//            }
+//        }]
+//    };
+//
+//    chart.setOption(option);
+//}
 
+//realtime chart02
+
+//function realtimeChart02(chart,data1,data2){
+//
+//}
+
+//function render_realtime_chart(data){
+//    $.ajax({
+//        //cache:false,
+//        type:'post',
+//        url:'realtime_chart01_data.json',
+//        //url:'/parksys/',
+//        dataType:'json',
+//        data:''||data,
+//        success:function(data){
+//            var chart=echarts.init(document.getElementById("realtime-chart-01"));
+//            //var data=JSON.parse(data.res);
+//            var data1=[];
+//            var data2=[];
+//            for(var i=0;i<data.length;i++){
+//                data1.push(data[i].day);
+//                data2.push(data[i].value);
+//            }
+//            realtimeChart01(chart,data1,data2);
+//        }
+//    });
+//
+//    $.ajax({
+//        //cache:false,
+//        type:'post',
+//        url:'realtime_chart02_data.json',
+//        //url:'/parksys/',
+//        dataType:'json',
+//        data:''||data,
+//        success:function(data){
+//            var chart=echarts.init(document.getElementById("realtime-chart-02"));
+//            //var data=JSON.parse(data.res);
+//            var data1=[];
+//            var data2=[];
+//            for(var i=0;i<data.length;i++){
+//                data1.push(data[i].day);
+//                data2.push(data[i].value);
+//            }
+//            realtimeChart02(chart,data1,data2);
+//        }
+//    });
+//
+//}
+
+function render_realtime(data){
+    //render_realtime_chart();
+
+    $('#realtime-table-01').bootstrapTable('destroy');
+    $.ajax({
+        //cache:false,
+        type:'post',
+        //url:'realtime_table_01_data.json',
+        url:'/parksys/currentcar',
+        dataType:'json',
+        data:''||data,
+        success:function(data){
+            $('#realtime-table-01').bootstrapTable({
+                classes:"table table-bordered table-condensed",
+                cache:false,
+                //data:data,
+                striped: false, //是否显示行间隔色
+                pagination:true,//是否分页
+                //dataField: "res",
+                pageNumber: 1, //初始化加载第一页，默认第一页
+                queryParamsType:'limit',//查询参数组织方式
+                sidePagination:'client',//默认是客户端分页
+                pageSize:10,//单页记录数
+                pageList:[10,15,20],//分页步进值
+                search: true,
+                showToggle: true,
+                showColumns:true,
+                showExport: true,
+                exportTypes:['excel','csv','doc','txt'],  //导出文件类型
+                clickToSelect: true,//是否启用点击选中行
+                buttonsAlign:'right',//按钮对齐方式
+                columns: [{
+                    title: '序号',//标题  可不加
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return index+1;
+                    }
+                },{
+                    field: 'carNum',
+                    title: '车牌号',
+                    align: 'center',
+                    formatter:function(value,row,index){
+                        var a = '<a class="realtime" href="#CarModal" data-toggle="modal" onclick="loadModal(this,'+"realtime"+')">'+value+'</a>';
+                        return a;
+                    }
+                },{
+                    field: 'time',
+                    title: '通过时间',
+                    align: 'center',
+                    sortable: true,
+                    sortOrder: 'desc'
+                },{
+                    field: 'type',
+                    title: '出入口',
+                    align: 'center'
+                },{
+                    field: 'parkName',
+                    title: '停车场名称',
+                    align: 'center'
+                }],
+                onLoadError: function(){
+                    return "目前没有重点车辆出入";
+                },
+                formatNoMatches: function(){
+                    return "目前没有重点车辆出入";
+                },
+                locale:'zh-CN',//中文支持,
+            });
+            $('#realtime-table-01').bootstrapTable('load',data);
+        }
+    });
+
+    $('#realtime-table-02').bootstrapTable('destroy');
+    $.ajax({
+        //cache:false,
+        type:'post',
+        //url:'realtime_table_02_data.json',
+        url:'/parksys/currentkeycar',
+        dataType:'json',
+        data:''||data,
+        success:function(data){
+            $('#realtime-table-02').bootstrapTable({
+                classes:"table table-bordered table-condensed",
+                cache:false,
+                //data:data,
+                striped: false, //是否显示行间隔色
+                pagination:true,//是否分页
+                //dataField: "res",
+                pageNumber: 1, //初始化加载第一页，默认第一页
+                queryParamsType:'limit',//查询参数组织方式
+                sidePagination:'client',//默认是客户端分页
+                pageSize:10,//单页记录数
+                pageList:[10,15,20],//分页步进值
+                search: true,
+                showToggle: true,
+                showColumns:true,
+                showExport: true,
+                exportTypes:['excel','csv','doc','txt'],  //导出文件类型
+                clickToSelect: true,//是否启用点击选中行
+                buttonsAlign:'right',//按钮对齐方式
+                columns: [{
+                    title: '序号',//标题  可不加
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return index+1;
+                    }
+                },{
+                    field: 'carNum',
+                    title: '车牌号',
+                    align: 'center',
+                    formatter:function(value,row,index){
+                        var a = '<a class="realtime" href="#CarModal" data-toggle="modal" onclick="loadModal(this,'+"realtime"+')">'+value+'</a>';
+                        return a;
+                    }
+                },{
+                    field: 'time',
+                    title: '通过时间',
+                    align: 'center',
+                    sortable: true,
+                    sortOrder: 'desc'
+                },{
+                    field: 'type',
+                    title: '出入口',
+                    align: 'center'
+                },{
+                    field: 'parkName',
+                    title: '停车场名称',
+                    align: 'center'
+                }],
+                onLoadSuccess:function(){
+                },
+                onLoadError: function(){
+                    return "目前没有重点车辆出入";
+                },
+                formatNoMatches: function(){
+                    return "目前没有重点车辆出入";
+                },
+                locale:'zh-CN',//中文支持,
+            });
+            $('#realtime-table-02').bootstrapTable('load',data);
+        }
+    });
+}
 
 function render_tssd(data){
+    $('#tssd-table').bootstrapTable('destroy');
     $.ajax({
         //cache:false,
         type:'post',
@@ -1320,6 +1798,7 @@ function render_tssd(data){
         success:function(data){
             //console.log(data);
             $('#tssd-table').bootstrapTable({
+                classes:"table table-bordered table-condensed",
                 cache:false,
                 //data:data,
                 striped: false, //是否显示行间隔色
@@ -1341,6 +1820,7 @@ function render_tssd(data){
                 columns: [{
                     //field: 'Number',//可不加
                     title: '序号',//标题  可不加
+                    align: 'center',
                     formatter: function (value, row, index) {
                         return index+1;
                     }
@@ -1352,28 +1832,16 @@ function render_tssd(data){
                         var a = '<a class="tssd" href="#CarModal" data-toggle="modal" onclick="loadModal(this,'+"tssd"+')">'+value+'</a>';
                         return a;
                     }
-                }, {
-                    field: 'roomNum',
-                    title: '房屋号',
+                },{
+                    field: 'time',
+                    title: '通过时间',
                     align: 'center',
                     sortable: true,
-                    sortOrder: 'desc',
-                }, {
-                    field: 'tel',
-                    title: '联系电话',
+                    sortOrder: 'desc'
+                },{
+                    field: 'type',
+                    title: '出入口',
                     align: 'center'
-                },{
-                    field: 'timeIn',
-                    title: '入场时间',
-                    align: 'center',
-                    sortable: true,
-                    sortOrder: 'desc',
-                },{
-                    field: 'timeOut',
-                    title: '出场时间',
-                    align: 'center',
-                    sortable: true,
-                    sortOrder: 'desc',
                 },{
                     field: 'parkName',
                     title: '停车场名称',
@@ -1413,7 +1881,7 @@ function render_tspd(data1,data2){
 
         }
     });
-
+    $('#tspd-table').bootstrapTable('destroy');
     $.ajax({
         type:'post',
 
@@ -1424,6 +1892,7 @@ function render_tspd(data1,data2){
         success:function(data){
             //console.log(data);
             $('#tspd-table').bootstrapTable({
+                classes:"table table-bordered table-condensed",
                 cache:false,
                 //data:data,
                 striped: false, //是否显示行间隔色
@@ -1445,6 +1914,7 @@ function render_tspd(data1,data2){
                 columns: [{
                     //field: 'Number',//可不加
                     title: '序号',//标题  可不加
+                    align: 'center',
                     formatter: function (value, row, index) {
                         return index+1;
                     }
@@ -1511,13 +1981,16 @@ $(function(){
     $('#myTab a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
-        //console.log(this.getAttribute("data-clicked"));
-
         var isClicked = this.getAttribute("data-clicked");
 
         if(this.name =="tytj"&& isClicked == "false"){
             //render tytj
             render_tytj();
+        }else if(this.name == "realtime" && isClicked == "false" ){
+            //render realtime
+            render_realtime();
+            setInterval("render_realtime()",3*60*1000);
+
         }else if(this.name == "tscl" && isClicked == "false" ){
             //render tscl
             render_tscl();

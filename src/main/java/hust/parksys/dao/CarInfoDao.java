@@ -28,4 +28,8 @@ public interface CarInfoDao {
 	String selectRemark(String carNum);
 
 	List<CarInfo> selectDayCars(String timeStart, String timeEnd);
+
+	List<String> selectAllCarNum();
+
+	List<CarInfo> selectProvenceCars(String string);
 }

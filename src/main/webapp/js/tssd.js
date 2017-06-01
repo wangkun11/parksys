@@ -63,15 +63,15 @@ $(function () {
         var timeSlot=$("#tssd-time option:selected").attr('value');
         var parkName=$("#tssd-parkName option:selected").attr('value');
         if(startDay==""){
-            alert("查询开始日期不能为空！");
+            alert("日期错误！请重新选择！");
         }else if(endDay==""){
-            alert("查询结束日期不能为空！");
+            alert("日期错误！请重新选择！");
         }else if(startDay>endDay){
-            alert("查询开始日期不能大于结束日期！");
+            alert("查询开始日期不能大于结束日期！请重新选择！");
         }else if(timeSlot==""){
-            alert("查询时间段不能为空！");
+            alert("查询时间段不能为空！请重新选择！");
         }else if(parkName==""){
-            alert("查询来源不能为空！");
+            alert("查询来源不能为空！请重新选择！");
         }else{
             var data={"startDay":startDay,"endDay":endDay,"timeSlot":timeSlot,"parkName":parkName};
             render_tssd(data);

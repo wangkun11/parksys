@@ -87,4 +87,17 @@ public class CarInfoServiceImpl implements CarInfoService {
 		return MyUtil.CarInfoToDtoCar(carInfos);
 	}
 
+	public List<String> selectAllCarNum() {
+		
+		return carInfoDao.selectAllCarNum();
+	}
+
+	/* (non-Javadoc)
+	 * @see hust.parksys.service.CarInfoService#selectProvenceCarDetail(java.lang.String)
+	 */
+	public List<DtoCar> selectProvenceCarDetail(String provence) {
+		List<CarInfo> carInfos=carInfoDao.selectProvenceCars(provence+"%");
+		return MyUtil.CarInfoToDtoCar(carInfos);
+	}
+
 }
